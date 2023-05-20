@@ -1,0 +1,523 @@
+{
+    "obligatorias": [
+        {
+            "nombre": "Análisis Matemático II A",
+            "equivalente": "Análisis Matemático II",
+            "creditosExtra": 0
+        },
+        {
+            "nombre": "Física I A",
+            "equivalente": "",
+            "creditosExtra": 8
+        },
+        {
+            "nombre": "Algoritmos y Programación I",
+            "equivalente": "Introducción al Desarrollo de Software",
+            "creditosExtra": 0
+        },
+        {
+            "nombre": "Álgebra II A",
+            "equivalente": "Álgebra Lineal",
+            "creditosExtra": 0
+        },
+        {
+            "nombre": "Física II A",
+            "equivalente": "Física para Informática",
+            "creditosExtra": 4
+        },
+        {
+            "nombre": "Algoritmos y Programación II",
+            "equivalente": "Algoritmos y Estructura de Datos",
+            "creditosExtra": 0
+        },
+        {
+            "nombre": "Probabilidad y Estadística B",
+            "equivalente": "Probabilidad y Estadística",
+            "creditosExtra": 0
+        },
+        {
+            "nombre": "Estructura del Computador",
+            "equivalente": "Organización del Computador",
+            "creditosExtra": 0
+        },
+        {
+            "nombre": "Algoritmos y Programación III",
+            "equivalente": "Paradigmas de Programación",
+            "creditosExtra": 0
+        },
+        {
+            "nombre": "Análisis Numérico I",
+            "equivalente": "Modelación Numérica",
+            "creditosExtra": 2
+        },
+        {
+            "nombre": "Sistemas Operativos",
+            "equivalente": "Sistemas Operativos",
+            "creditosExtra": 0
+        },
+        {
+            "nombre": "Organización de Datos",
+            "equivalente": "Ciencia de Datos",
+            "creditosExtra": 0
+        },
+        {
+            "nombre": "Taller de Programación I",
+            "equivalente": "Taller de Programación",
+            "creditosExtra": 0
+        },
+        {
+            "nombre": "Modelos y Optimización I",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Taller de Programación II",
+            "equivalente": "",
+            "creditosExtra": 4
+        },
+        {
+            "nombre": "Análisis de la Información",
+            "equivalente": "Ingeniería de Software I",
+            "creditosExtra": 0
+        },
+        {
+            "nombre": "Técnicas de Diseño",
+            "equivalente": "Ingeniería de Software II",
+            "creditosExtra": 0
+        },
+        {
+            "nombre": "Base de Datos",
+            "equivalente": "Base de Datos",
+            "creditosExtra": 0
+        },
+        {
+            "nombre": "Introducción a los Sistemas Distribuidos",
+            "equivalente": "Redes",
+            "creditosExtra": 0
+        },
+        {
+            "nombre": "Legislación y Ejercicio Profesional de la Ingeniería en Informática",
+            "equivalente": "",
+            "creditosExtra": 4
+        }
+    ],
+    "orientaciones": [
+        {
+            "nombre": "Distribuidos",
+            "materias": [
+                {
+                    "nombre": "Técnicas de Programación Concurrente",
+                    "equivalente": "Programación Concurrente",
+                    "creditosExtra": 0
+                },
+                {
+                    "nombre": "Sistemas Distribuidos I",
+                    "equivalente": "Sistemas Distribuidos I",
+                    "creditosExtra": 0
+                },
+                {
+                    "nombre": "Taller de Programación III",
+                    "equivalente": "",
+                    "creditosExtra": 6
+                }
+            ]
+        },
+        {
+            "nombre": "Gestión",
+            "materias": [
+                {
+                    "nombre": "Administración y Control de Proyectos Informáticos I",
+                    "equivalente": "Gestión del Desarrollo de Sistemas Informáticos",
+                    "creditosExtra": 0
+                },
+                {
+                    "nombre": "Taller de Desarrollo de Proyectos I",
+                    "equivalente": "",
+                    "creditosExtra": 6
+                },
+                {
+                    "nombre": "Administración y Control de Proyectos Informáticos II",
+                    "equivalente": "",
+                    "creditosExtra": 6
+                },
+                {
+                    "nombre": "Taller de Desarrollo de Proyectos II",
+                    "equivalente": "",
+                    "creditosExtra": 6
+                }
+            ]
+        },
+        {
+            "nombre": "Producción",
+            "materias": [
+                {
+                    "nombre": "Manufactura Integrada por Computadora (CIM) I",
+                    "equivalente": "",
+                    "creditosExtra": 6
+                },
+                {
+                    "nombre": "Sistemas Automáticos de Diagnóstico y Detección de Fallas I",
+                    "equivalente": "",
+                    "creditosExtra": 6
+                },
+                {
+                    "nombre": "Manufactura Integrada por Computadora (CIM) II",
+                    "equivalente": "",
+                    "creditosExtra": 6
+                },
+                {
+                    "nombre": "Sistemas de Soporte para Celdas de Producción Flexibles",
+                    "equivalente": "",
+                    "creditosExtra": 4
+                }
+            ]
+        }
+    ],
+    "electivas": [
+        {
+            "nombre": "Matemática Discreta",
+            "equivalente": "TDA (- 2 créditos)",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Análisis Matemático III A",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Ecuaciones Diferenciales Ordinarias",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Análisis Funcional",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Mecánica Racional",
+            "equivalente": "",
+            "creditosExtra": 4
+        },
+        {
+            "nombre": "Física III D",
+            "equivalente": "",
+            "creditosExtra": 4
+        },
+        {
+            "nombre": "Química",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Estática y Resistencia de Materiales B",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Análisis de Circuitos",
+            "equivalente": "",
+            "creditosExtra": 10
+        },
+        {
+            "nombre": "Circuitos Electrónicos I",
+            "equivalente": "",
+            "creditosExtra": 8
+        },
+        {
+            "nombre": "Laboratorio de Microcomputadoras",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Laboratorio",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Sistemas Digitales",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Teoría de Control I",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Circuitos de Pulsos",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Organización de Computadoras",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Teoría de la Información y Codificación",
+            "equivalente": "",
+            "creditosExtra": 4
+        },
+        {
+            "nombre": "Arquitecturas Paralelas",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Robótica",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Técnica Digital Avanzada",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Procesamiento del Habla",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Procesamiento de Imágenes",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Sistemas Biológicos",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Simulación de Sistemas de Control",
+            "equivalente": "",
+            "creditosExtra": 4
+        },
+        {
+            "nombre": "Redes Neuronales",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Criptografía y Seguridad Informática",
+            "equivalente": "",
+            "creditosExtra":  6
+        },
+        {
+            "nombre": "Sistemas Gráficos",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Señales y Sistemas",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Procesos Estocásticos",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Fundamentos Matemáticos de la Visión en Robótica",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Estructura de las Organizaciones",
+            "equivalente": "EBT2 (si tenes EBT1)",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Información en las Organizaciones",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Modelos y Optimización II",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Estructura Económica Argentina",
+            "equivalente": "EBT1 (si tenes Legal)",
+            "creditosExtra": 4
+        },
+        {
+            "nombre": "Modelos y Optimización III",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Análisis y Resolución de Problemas",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Circuitos de Información en la Empresa",
+            "equivalente": "",
+            "creditosExtra": 4
+        },
+        {
+            "nombre": "Recursos Humanos",
+            "equivalente": "",
+            "creditosExtra": 4
+        },
+        {
+            "nombre": "Ingeniería Económica",
+            "equivalente": "EBT1 (si tenes Legal)",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Materiales Industriales I",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Lenguajes Formales",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Lenguajes de Programación",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Simulación",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Teoría de Algoritmos I",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Teoría de Algoritmos II",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Teoría de Lenguaje",
+            "equivalente": "",
+            "creditosExtra": 4
+        },
+        {
+            "nombre": "Análisis Numérico II A",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Calidad en Desarrollo de Sistemas",
+            "equivalente": "",
+            "creditosExtra": 4
+        },
+        {
+            "nombre": "Introducción a los Sistemas Inteligentes",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Técnicas de Producción de Software I",
+            "equivalente": "",
+            "creditosExtra": 4
+        },
+        {
+            "nombre": "Técnicas de Producción de Software II",
+            "equivalente": "",
+            "creditosExtra": 4
+        },
+        {
+            "nombre": "Técnicas de Producción de Software III",
+            "equivalente": "",
+            "creditosExtra": 4
+        },
+        {
+            "nombre": "Taller de Desarrollo de Proyectos III",
+            "equivalente": "",
+            "creditosExtra": 4
+        },
+        {
+            "nombre": "Organización de la Implantación y el Mantenimiento",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Modelos de Proceso de Desarrollo",
+            "equivalente": "",
+            "creditosExtra": 4
+        },
+        {
+            "nombre": "Evaluación de Proyectos y Manejo de Riesgos",
+            "equivalente": "",
+            "creditosExtra": 4
+        },
+        {
+            "nombre": "Técnicas de Programación Concurrente II",
+            "equivalente": "",
+            "creditosExtra": 4
+        },
+        {
+            "nombre": "Sistemas Distribuidos II",
+            "equivalente": "",
+            "creditosExtra": 4
+        },
+        {
+            "nombre": "Sistemas Multimediales",
+            "equivalente": "",
+            "creditosExtra": 4
+        },
+        {
+            "nombre": "Sistemas Automáticos de Diagnóstico y Detección de Fallas II",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Sistemas de Programación no convencional de Robots",
+            "equivalente": "",
+            "creditosExtra": 6
+        },
+        {
+            "nombre": "Seminario de Ingeniería en Informática I",
+            "equivalente": "",
+            "creditosExtra": 3
+        },
+        {
+            "nombre": "Seminario de Ingeniería en Informática II",
+            "equivalente": "",
+            "creditosExtra": 3
+        },
+        {
+            "nombre": "Arquitectura de Software",
+            "equivalente": "Arquitectura de Software",
+            "creditosExtra": 4
+        },
+        {
+            "nombre": "Idioma Inglés",
+            "equivalente": "Exámen Inglés",
+            "creditosExtra": 4
+        },
+        {
+            "nombre": "Idioma Alemán",
+            "equivalente": "",
+            "creditosExtra": 4
+        },
+        {
+            "nombre": "Idioma Francés",
+            "equivalente": "",
+            "creditosExtra": 4
+        },
+        {
+            "nombre": "Idioma Italiano",
+            "equivalente": "",
+            "creditosExtra": 4
+        },
+        {
+            "nombre": "Idioma Portugués",
+            "equivalente": "",
+            "creditosExtra": 4
+        }
+    ]
+}
