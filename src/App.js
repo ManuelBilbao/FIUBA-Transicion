@@ -29,7 +29,7 @@ function App() {
   };
 
   const eliminarMateria86 = (materia) => {
-    setMaterias86(materias86.filter(x => x !== materia));
+    setMaterias86(materias86.filter(m => m.nombre !== materia.nombre));
   };
 
   const handleCheck = (e, materia) => {
