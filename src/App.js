@@ -106,7 +106,7 @@ function App() {
               {materias_plan86.electivas.map(materia =>
                 <FormControlLabel
                   key={`${materia.nombre}-86`}
-                  control={<Checkbox onChange={e => handleCheck(e, materia)} />}
+                  control={<Checkbox onChange={e => handleCheck(e, materia)} checked={materias86.some(m => m.nombre === materia.nombre)}/>}
                   label={materia.nombre}
                 />
               )}
