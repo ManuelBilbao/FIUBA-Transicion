@@ -98,6 +98,10 @@
             {
                 "materias": ["Teoría de Lenguaje"],
                 "creditos": -4
+            },
+            {
+                "materias": ["Lenguajes Formales"],
+                "creditos": -6
             }
         ]
     },
