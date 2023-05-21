@@ -18,7 +18,7 @@ function App() {
     setMaterias86(materias86.concat(materia));
   };
   const seleccionarTodasObligatorias86 = () => {
-    setMaterias86(materias_plan86.obligatorias);
+    agregarMateria86(materias_plan86.obligatorias);
   };
   const limpiarTodo = () => {
     setMaterias86([]);
