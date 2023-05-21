@@ -85,7 +85,7 @@ function App() {
     if (!materias86 || materias86.length === 0) return;
     setCreditosDirectos(materias86.map(materia => materia.creditosExtra).reduce((a, b) => a + b));
     // eslint-disable-next-line
-  }, []);
+  }, [materias86]);
 
   return (
     <Box sx={{flexGrow: 1}} padding={2}>
