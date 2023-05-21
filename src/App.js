@@ -15,11 +15,22 @@ function App() {
   const [materias23, setMaterias23] = useState([]);
 
   const agregarMateria86 = (materia) => {
+    if (materias86.includes(materia)) return;
+
     setMaterias86(materias86.concat(materia));
   };
-  const seleccionarTodasObligatorias86 = () => {
-    agregarMateria86(materias_plan86.obligatorias);
+
+  const agregarMaterias86 = (materias) => {
+    const filtradas = materias.filter(materia => !materias86.includes(materia));
+    if (filtradas.length === 0) return;
+
+    setMaterias86(materias86.concat(filtradas));
   };
+
+  const seleccionarTodasObligatorias86 = () => {
+    agregarMaterias86(materias_plan86.obligatorias);
+  };
+
   const limpiarTodo = () => {
     setMaterias86([]);
     setCreditosDirectos(0);
@@ -51,8 +62,7 @@ function App() {
       return materias.every(materia => materias86.map(m => m.nombre).includes(materia))
     };
 
-    materias_plan23.map(materia => {
-      // eslint-disable-next-line
+    materias_plan23.forEach(materia => {
       if (materia.equivalencias === undefined) return;
 
       for (let i = 0; i < materia.equivalencias.length; i++) {
@@ -69,10 +79,11 @@ function App() {
           break;
         }
       }
-
-      // eslint-disable-next-line
-      return;
     });
+
+    if (materias86 && materias86.length !== 0)
+      setCreditosDirectos(materias86.map(materia => materia.creditosExtra).reduce((a, b) => a + b));
+
     setMaterias23(_materias23);
     setCreditosTransicion(_creditos);
   }, [materias86]);
@@ -80,12 +91,6 @@ function App() {
   useEffect(() => {
     setCreditos(creditosDirectos + creditosTransicion);
   }, [creditosDirectos, creditosTransicion]);
-
-  useEffect(() => {
-    if (!materias86 || materias86.length === 0) return;
-    setCreditosDirectos(materias86.map(materia => materia.creditosExtra).reduce((a, b) => a + b));
-    // eslint-disable-next-line
-  }, [materias86]);
 
   return (
     <Box sx={{flexGrow: 1}} padding={2}>
