@@ -131,16 +131,6 @@ function App() {
                 />
               )}
             </FormGroup>
-            <FormGroup>
-              <FormControlLabel
-                label="Seleccionar todas las obligatorias"
-                control={
-                  <Checkbox
-                    onClick={e => e.preventDefault()}
-                    />
-                }
-              />
-            </FormGroup>
           </Paper>
           <Paper elevation={3} sx={{padding: "1em", marginBottom: "2em"}}>
             <h2>Orientación</h2>
