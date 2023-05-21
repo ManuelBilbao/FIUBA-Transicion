@@ -11,16 +11,12 @@ function App() {
   const [materias86, setMaterias86] = useState([]);
   const [materias23, setMaterias23] = useState([]);
 
-  const addCreditos = (num) => {
-    setCreditosDirectos(creditosDirectos + num);
-  };
-
   const agregarMateria86 = (materia) => {
     setMaterias86(materias86.concat(materia));
   };
 
   const eliminarMateria86 = (materia) => {
-    setMaterias86(materias86.filter(x => x != materia));
+    setMaterias86(materias86.filter(x => x !== materia));
   };
 
   const handleCheck = (e, materia) => {
@@ -38,8 +34,12 @@ function App() {
     let _creditos = 0;
     let taller2Usada = false;
 
+    const tieneMaterias = (materias) => {
+      return materias.every(materia => materias86.map(m => m.nombre).includes(materia))
+    };
+
     materias_plan23.map(materia => {
-      if (materia.equivalencias === undefined) return;
+      if (materia.equivalencias === undefined) return 0;
 
       for (let i = 0; i < materia.equivalencias.length; i++) {
         if (taller2Usada && materia.equivalencias[i].materias.includes("Taller de Programación II"))
@@ -55,6 +55,8 @@ function App() {
           break;
         }
       }
+
+      return 0;
     });
     setMaterias23(_materias23);
     setCreditosTransicion(_creditos);
@@ -63,10 +65,6 @@ function App() {
   useEffect(() => {
     setCreditos(creditosDirectos + creditosTransicion);
   }, [creditosDirectos, creditosTransicion]);
-
-  const tieneMaterias = (materias) => {
-    return materias.every(materia => materias86.map(m => m.nombre).includes(materia))
-  };
 
   return (
     <Box sx={{flexGrow: 1}} padding={2}>
