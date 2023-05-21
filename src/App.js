@@ -22,6 +22,10 @@ function App() {
   };
   const limpiarTodo = () => {
     setMaterias86([]);
+    setCreditosDirectos(0);
+    setCreditosTransicion(0);
+    setCreditos(0);
+    setMaterias23([]);
   };
 
   const eliminarMateria86 = (materia) => {
@@ -48,7 +52,8 @@ function App() {
     };
 
     materias_plan23.map(materia => {
-      if (materia.equivalencias === undefined) return 0;
+      // eslint-disable-next-line
+      if (materia.equivalencias === undefined) return;
 
       for (let i = 0; i < materia.equivalencias.length; i++) {
         if (taller2Usada && materia.equivalencias[i].materias.includes("Taller de Programación II"))
@@ -65,7 +70,8 @@ function App() {
         }
       }
 
-      return 0;
+      // eslint-disable-next-line
+      return;
     });
     setMaterias23(_materias23);
     setCreditosTransicion(_creditos);
@@ -74,6 +80,12 @@ function App() {
   useEffect(() => {
     setCreditos(creditosDirectos + creditosTransicion);
   }, [creditosDirectos, creditosTransicion]);
+
+  useEffect(() => {
+    if (!materias86 || materias86.length === 0) return;
+    setCreditosDirectos(materias86.map(materia => materia.creditosExtra).reduce((a, b) => a + b));
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <Box sx={{flexGrow: 1}} padding={2}>
@@ -153,7 +165,7 @@ function App() {
               {materias_plan86.electivas.map(materia =>
                 <FormControlLabel
                   key={`${materia.nombre}-86`}
-                  control={<Checkbox onChange={e => handleCheck(e, materia)} checked={materias86.some(m => m.nombre === materia.nombre)} />}
+                  control={<Checkbox onChange={e => handleCheck(e, materia)} checked={materias86.some(m => m.nombre === materia.nombre)}/>}
                   label={materia.nombre}
                 />
               )}
