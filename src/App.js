@@ -21,7 +21,7 @@ function App() {
   };
 
   const agregarMaterias86 = (materias) => {
-    const filtradas = materias.filter(materia => !materias86.includes(materia));
+    const filtradas = materias.filter(materia => !materias86.map(m => m.nombre).includes(materia.nombre));
     if (filtradas.length === 0) return;
 
     setMaterias86(materias86.concat(filtradas));
