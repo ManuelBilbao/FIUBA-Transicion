@@ -242,11 +242,7 @@
         "nombre": "Empresas de Base Tecnológica II",
         "equivalencias": [
             {
-                "materias": ["Legislación y Ejercicio Profesional de la Ingeniería en Informática", "Estructura Económica Argentina", "Estructura de las Organizaciones"],
-                "creditos": -6
-            },
-            {
-                "materias": ["Legislación y Ejercicio Profesional de la Ingeniería en Informática", "Ingeniería Económica", "Estructura de las Organizaciones"],
+                "materias": ["Estructura de las Organizaciones"],
                 "creditos": -6
             }
         ]
