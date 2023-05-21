@@ -3,12 +3,13 @@ import { Checkbox, FormGroup, FormControlLabel, FormLabel, Grid, Paper, Box } fr
 import materias_plan86 from "./plan_86.json";
 import materias_plan23 from "./plan_23.json";
 import { useEffect, useState } from 'react';
+import { useMaterias86 } from './utils/useMaterias86';
 
 function App() {
   const [creditos, setCreditos] = useState(0);
   const [creditosDirectos, setCreditosDirectos] = useState(0);
   const [creditosTransicion, setCreditosTransicion] = useState(0);
-  const [materias86, setMaterias86] = useState([]);
+  const [materias86, setMaterias86] = useMaterias86("materias86-calculadorBilbao", []);
   const [materias23, setMaterias23] = useState([]);
 
   const agregarMateria86 = (materia) => {
@@ -76,7 +77,7 @@ function App() {
               {materias_plan86.obligatorias.map((materia, idx) =>
                 <FormControlLabel
                   key={`${materia.nombre}-86`}
-                  control={<Checkbox onChange={(e) => handleCheck(e, materia)} />}
+                  control={<Checkbox onChange={(e) => handleCheck(e, materia)} checked={materias86.some(m => m.nombre === materia.nombre)} />}
                   label={materia.nombre}
                 />
               )}
@@ -90,7 +91,7 @@ function App() {
                 {orientacion.materias.map((materia, idx) =>
                   <FormControlLabel
                     key={`${materia.nombre}-86`}
-                    control={<Checkbox onChange={(e) => handleCheck(e, materia)} />}
+                    control={<Checkbox onChange={(e) => handleCheck(e, materia)} checked={materias86.some(m => m.nombre === materia.nombre)}/>}
                     label={materia.nombre}
                   />
                 )}
