@@ -40,7 +40,8 @@ function App() {
     };
 
     materias_plan23.map(materia => {
-      if (materia.equivalencias === undefined) return 0;
+      // eslint-disable-next-line
+      if (materia.equivalencias === undefined) return;
 
       for (let i = 0; i < materia.equivalencias.length; i++) {
         if (taller2Usada && materia.equivalencias[i].materias.includes("Taller de Programación II"))
@@ -57,7 +58,8 @@ function App() {
         }
       }
 
-      return 0;
+      // eslint-disable-next-line
+      return;
     });
     setMaterias23(_materias23);
     setCreditosTransicion(_creditos);
@@ -66,6 +68,11 @@ function App() {
   useEffect(() => {
     setCreditos(creditosDirectos + creditosTransicion);
   }, [creditosDirectos, creditosTransicion]);
+
+  useEffect(() => {
+    setCreditosDirectos(materias86.map(materia => materia.creditosExtra).reduce((a, b) => a + b));
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <Box sx={{flexGrow: 1}} padding={2}>
