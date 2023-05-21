@@ -17,3 +17,11 @@ footer{
   align-items: center;
   justify-content: center;
 }
+
+footer p {
+  margin-left: auto;
+}
+
+footer .github {
+  margin-left: auto;
+}
