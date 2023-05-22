@@ -1,11 +1,12 @@
 import './App.css';
-import { Checkbox, FormGroup, FormControlLabel, FormLabel, Grid, Paper, Box, Button } from '@mui/material';
+import { Checkbox, FormGroup, FormControlLabel, FormLabel, Grid, Paper, Box, Button, Typography, Popover, List, ListItem } from '@mui/material';
 import materias_plan86 from "./plan_86.json";
 import materias_plan23 from "./plan_23.json";
 import { useEffect, useState } from 'react';
 import { useMaterias86 } from './utils/useMaterias86';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SnowboardingIcon from '@mui/icons-material/Snowboarding';
+import InfoIcon from '@mui/icons-material/Info';
 
 function App() {
   const [creditos, setCreditos] = useState(0);
@@ -13,6 +14,8 @@ function App() {
   const [creditosTransicion, setCreditosTransicion] = useState(0);
   const [materias86, setMaterias86] = useMaterias86("materias86-calculadorBilbao", []);
   const [materias23, setMaterias23] = useState([]);
+  const [popoverAnchor, setPopoverAnchor] = useState(null);
+  const [popoverMateria, setPopoverMateria] = useState("");
 
   const agregarMateria86 = (materia) => {
     if (materias86.includes(materia)) return;
@@ -50,6 +53,17 @@ function App() {
       eliminarMateria86(materia);
     }
   };
+
+  const handlePopoverClick = (e, materia) => {
+    setPopoverAnchor(e.currentTarget);
+    setPopoverMateria(materia.nombre);
+  };
+
+  const creditosExtraNecesarios = (equivalencia) => {
+    return 0 - equivalencia.creditos
+      - materias_plan86.obligatorias.filter(m => equivalencia.materias.includes(m.nombre)).reduce((a, b) => a.creditosExtra??0 + b.creditosExtra??0, 0)
+      - materias_plan86.electivas.filter(m => equivalencia.materias.includes(m.nombre)).reduce((a, b) => a.creditosExtra??0 + b.creditosExtra??0, 0)
+  }
 
   useEffect(() => {
     let _materias23 = [];
@@ -169,16 +183,39 @@ function App() {
             <h2>Plan 2023</h2>
             <FormGroup>
               {materias_plan23.map(materia =>
-                <FormControlLabel
-                  key={`${materia.nombre}-23`}
-                  control={
-                    <Checkbox
-                      onClick={e => e.preventDefault()}
-                      checked={materias23.includes(materia.nombre)}
-                    />
-                  }
-                  label={materia.nombre}
-                />
+                <div key={`${materia.nombre}-23`}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        onClick={e => e.preventDefault()}
+                        checked={materias23.includes(materia.nombre)}
+                      />
+                    }
+                    disableTypography={true}
+                    label={
+                      <>
+                        <Typography>{materia.nombre}</Typography>
+                        <InfoIcon onClick={e => handlePopoverClick(e, materia)} sx={{marginLeft: "0.4em"}} />
+                      </>
+                    }
+                  />
+                  <Popover
+                    open={popoverMateria === materia.nombre}
+                    anchorEl={popoverAnchor}
+                    onClose={() => setPopoverAnchor(null) || setPopoverMateria("")}
+                    anchorOrigin={{vertical: "top", horizontal: "right"}}
+                    transformOrigin={{horizontal: "right", vertical: "top"}}
+                  >
+                    <List>
+                      {materia.equivalencias.map((equivalencia, idx) =>
+                        <ListItem key={`${materia.nombre}-23-equivalencia${idx}`} sx={{p: 2}}>
+                          {equivalencia.materias.join(' + ')}
+                          {creditosExtraNecesarios(equivalencia) > 0 && ` + ${creditosExtraNecesarios(equivalencia)} créditos`}
+                        </ListItem>
+                      )}
+                    </List>
+                  </Popover>
+                </div>
               )}
               <FormControlLabel
                 control={
