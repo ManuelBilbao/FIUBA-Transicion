@@ -46,10 +46,8 @@ function App() {
   const handleCheck = (e, materia) => {
     if (e.target.checked) {
       agregarMateria86(materia);
-      setCreditosDirectos(creditosDirectos + materia.creditosExtra);
     } else {
       eliminarMateria86(materia);
-      setCreditosDirectos(creditosDirectos - materia.creditosExtra);
     }
   };
 
@@ -81,8 +79,7 @@ function App() {
       }
     });
 
-    if (materias86 && materias86.length !== 0)
-      setCreditosDirectos(materias86.map(materia => materia.creditosExtra).reduce((a, b) => a + b));
+    setCreditosDirectos(materias86.map(materia => materia.creditosExtra).reduce((a, b) => a + b, 0));
 
     setMaterias23(_materias23);
     setCreditosTransicion(_creditos);
