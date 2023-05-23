@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react';
 import { useMaterias86 } from './utils/useMaterias86';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SnowboardingIcon from '@mui/icons-material/Snowboarding';
+import Materia86 from './components/Materia86';
+import Materia23 from './components/Materia23';
 
 function App() {
   const [creditos, setCreditos] = useState(0);
@@ -43,16 +45,6 @@ function App() {
     setMaterias86(materias86.filter(m => m.nombre !== materia.nombre));
   };
 
-  const handleCheck = (e, materia) => {
-    if (e.target.checked) {
-      agregarMateria86(materia);
-      setCreditosDirectos(creditosDirectos + materia.creditosExtra);
-    } else {
-      eliminarMateria86(materia);
-      setCreditosDirectos(creditosDirectos - materia.creditosExtra);
-    }
-  };
-
   useEffect(() => {
     let _materias23 = [];
     let _creditos = 0;
@@ -81,8 +73,7 @@ function App() {
       }
     });
 
-    if (materias86 && materias86.length !== 0)
-      setCreditosDirectos(materias86.map(materia => materia.creditosExtra).reduce((a, b) => a + b));
+    setCreditosDirectos(materias86.map(materia => materia.creditosExtra).reduce((a, b) => a + b, 0));
 
     setMaterias23(_materias23);
     setCreditosTransicion(_creditos);
@@ -129,10 +120,12 @@ function App() {
             <h2>Obligatorias</h2>
             <FormGroup>
               {materias_plan86.obligatorias.map((materia, idx) =>
-                <FormControlLabel
+                <Materia86
                   key={`${materia.nombre}-86`}
-                  control={<Checkbox onChange={(e) => handleCheck(e, materia)} checked={materias86.some(m => m.nombre === materia.nombre)} />}
-                  label={materia.nombre}
+                  materia={materia}
+                  checked={materias86.some(m => m.nombre === materia.nombre)}
+                  onCheck={agregarMateria86}
+                  onUncheck={eliminarMateria86}
                 />
               )}
             </FormGroup>
@@ -143,10 +136,12 @@ function App() {
               <FormGroup key={orientacion.nombre} sx={{marginBottom: "1em"}}>
                 <FormLabel>{orientacion.nombre}</FormLabel>
                 {orientacion.materias.map((materia, idx) =>
-                  <FormControlLabel
+                  <Materia86
                     key={`${materia.nombre}-86`}
-                    control={<Checkbox onChange={(e) => handleCheck(e, materia)} checked={materias86.some(m => m.nombre === materia.nombre)}/>}
-                    label={materia.nombre}
+                    materia={materia}
+                    checked={materias86.some(m => m.nombre === materia.nombre)}
+                    onCheck={agregarMateria86}
+                    onUncheck={eliminarMateria86}
                   />
                 )}
               </FormGroup>
@@ -158,10 +153,12 @@ function App() {
             <h2>Electivas</h2>
             <FormGroup>
               {materias_plan86.electivas.map(materia =>
-                <FormControlLabel
+                <Materia86
                   key={`${materia.nombre}-86`}
-                  control={<Checkbox onChange={e => handleCheck(e, materia)} checked={materias86.some(m => m.nombre === materia.nombre)}/>}
-                  label={materia.nombre}
+                  materia={materia}
+                  checked={materias86.some(m => m.nombre === materia.nombre)}
+                  onCheck={agregarMateria86}
+                  onUncheck={eliminarMateria86}
                 />
               )}
             </FormGroup>
@@ -172,15 +169,10 @@ function App() {
             <h2>Plan 2023</h2>
             <FormGroup>
               {materias_plan23.map(materia =>
-                <FormControlLabel
+                <Materia23
                   key={`${materia.nombre}-23`}
-                  control={
-                    <Checkbox
-                      onClick={e => e.preventDefault()}
-                      checked={materias23.includes(materia.nombre)}
-                    />
-                  }
-                  label={materia.nombre}
+                  materia={materia}
+                  checked={materias23.includes(materia.nombre)}
                 />
               )}
               <FormControlLabel
