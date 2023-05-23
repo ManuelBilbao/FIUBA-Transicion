@@ -65,5 +65,5 @@ export function useMaterias86(key, initialValue) {
         console.log(error);
       }
     };
-    return [storedValue ??[], setValue];
+    return [storedValue ??[], setValue, readOnly];
   }
