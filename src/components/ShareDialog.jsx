@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogTitle, Link, Button, DialogActions } from "@mui/material";
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 
@@ -15,6 +15,10 @@ function ShareDialog({ open, onClose, codigo }) {
       console.error('Failed to copy text: ', error);
     }
   };
+
+  useEffect(() => {
+    setCopied(false);
+  }, [open]);
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth>

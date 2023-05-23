@@ -1,5 +1,5 @@
 import './App.css';
-import { Checkbox, FormGroup, FormControlLabel, FormLabel, Grid, Paper, Box, Button } from '@mui/material';
+import { Checkbox, FormGroup, FormControlLabel, FormLabel, Grid, Paper, Box, Button, Alert, AlertTitle } from '@mui/material';
 import materias_plan86 from "./plan_86.json";
 import materias_plan23 from "./plan_23.json";
 import { useEffect, useState } from 'react';
@@ -11,11 +11,14 @@ import Materia86 from './components/Materia86';
 import Materia23 from './components/Materia23';
 import ShareDialog from './components/ShareDialog';
 
+
+const WEB_URL = process.env.REACT_APP_WEB_URL;
+
 function App() {
   const [creditos, setCreditos] = useState(0);
   const [creditosDirectos, setCreditosDirectos] = useState(0);
   const [creditosTransicion, setCreditosTransicion] = useState(0);
-  const [materias86, setMaterias86] = useMaterias86("materias86-calculadorBilbao", []);
+  const [materias86, setMaterias86, readOnly] = useMaterias86("materias86-calculadorBilbao", []);
   const [materias23, setMaterias23] = useState([]);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [shareCode, setShareCode] = useState("");
@@ -120,36 +123,47 @@ function App() {
           <Paper elevation={3} sx={{padding: "1em"}}>
             <h2>Calculadora transición plan 86 a 2023</h2>
             <FormGroup>
-              
-              <Button
-                variant="contained"
-                color="primary"
-                startIcon={<SnowboardingIcon />}
-                sx={{ marginBottom: "1em" }}
-                onClick={seleccionarTodasObligatorias86}
-              >
-                Aprobar obligatorias
-              </Button>
 
-              <Button
-                variant="contained"
-                color="error"
-                startIcon={<DeleteIcon />}
-                sx={{ marginBottom: "1em" }}
-                onClick={limpiarTodo}
-              >
-                Limpiar todo
-              </Button>
 
-              <Button
-                variant="contained"
-                color="success"
-                startIcon={<ShareIcon />}
-                onClick={compartir}
-              >
-                Compartir
-              </Button>
-
+              {
+                readOnly ? (
+                  <Alert severity="info">
+                    <AlertTitle>Modo de solo lectura</AlertTitle>
+                     Esta pantalla es solo compartir tu estado actual.<br />
+                     En caso de querer modificarlo, ingresa en la <a href={WEB_URL}>pantalla principal</a>.
+                  </Alert>
+                ) : (
+                    <>
+                      <Button
+                      variant="contained"
+                      color="primary"
+                      startIcon={<SnowboardingIcon />}
+                      sx={{ marginBottom: "1em" }}
+                      onClick={seleccionarTodasObligatorias86}
+                    >
+                      Aprobar obligatorias
+                    </Button>
+      
+                    <Button
+                      variant="contained"
+                      color="error"
+                      startIcon={<DeleteIcon />}
+                      sx={{ marginBottom: "1em" }}
+                      onClick={limpiarTodo}
+                    >
+                      Limpiar todo
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="success"
+                      startIcon={<ShareIcon />}
+                      onClick={compartir}
+                      >
+                      Compartir
+                     </Button>
+                  </>
+                )
+              }
               <ShareDialog codigo={shareCode} open={shareDialogOpen} onClose={() => setShareDialogOpen(false)} />
             </FormGroup>
           </Paper>
@@ -167,6 +181,7 @@ function App() {
                   checked={materias86.some(m => m.nombre === materia.nombre)}
                   onCheck={agregarMateria86}
                   onUncheck={eliminarMateria86}
+                  disabled={readOnly}
                 />
               )}
             </FormGroup>
@@ -183,6 +198,7 @@ function App() {
                     checked={materias86.some(m => m.nombre === materia.nombre)}
                     onCheck={agregarMateria86}
                     onUncheck={eliminarMateria86}
+                    disabled={readOnly}
                   />
                 )}
               </FormGroup>
@@ -200,6 +216,7 @@ function App() {
                   checked={materias86.some(m => m.nombre === materia.nombre)}
                   onCheck={agregarMateria86}
                   onUncheck={eliminarMateria86}
+                  disabled={readOnly}
                 />
               )}
             </FormGroup>
