@@ -49,41 +49,27 @@ function App() {
     setMaterias86(materias86.filter(m => m.nombre !== materia.nombre));
   };
 
-  const exportar = () => {
+  const compartir = () => {
     let bits = "";
     let hexa = "";
 
     materias_plan86.obligatorias.forEach(materia => {
-      const bit = (materias86.some(m => m.nombre === materia.nombre)) ? "1" : "0";
-      bits = bit + bits;
-      if (bits.length === 4) {
-        hexa += parseInt(bits, 2).toString(16);
-        bits = "";
-      }
+      bits += (materias86.some(m => m.nombre === materia.nombre)) ? "1" : "0";
     });
 
     materias_plan86.orientaciones.forEach(orientacion => {
       orientacion.materias.forEach(materia => {
-        const bit = (materias86.some(m => m.nombre === materia.nombre)) ? "1" : "0";
-        bits = bit + bits;
-        if (bits.length === 4) {
-          hexa += parseInt(bits, 2).toString(16);
-          bits = "";
-        }
+        bits += (materias86.some(m => m.nombre === materia.nombre)) ? "1" : "0";
       });
     });
 
     materias_plan86.electivas.forEach(materia => {
-      const bit = (materias86.some(m => m.nombre === materia.nombre)) ? "1" : "0";
-      bits = bit + bits;
-      if (bits.length === 4) {
-        hexa += parseInt(bits, 2).toString(16);
-        bits = "";
-      }
+      bits += (materias86.some(m => m.nombre === materia.nombre)) ? "1" : "0";
     });
 
-    if (bits.length > 0)
-      hexa += parseInt(bits, 2).toString(16);
+    for (let i = 0; i < bits.length; i += 4) {
+      hexa += parseInt(bits.slice(i, i+4), 2).toString(16);
+    }
 
     setShareCode(hexa);
     setShareDialogOpen(true);
@@ -159,7 +145,7 @@ function App() {
                 variant="contained"
                 color="success"
                 startIcon={<ShareIcon />}
-                onClick={exportar}
+                onClick={compartir}
               >
                 Compartir
               </Button>
