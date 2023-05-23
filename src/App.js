@@ -6,8 +6,10 @@ import { useEffect, useState } from 'react';
 import { useMaterias86 } from './utils/useMaterias86';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SnowboardingIcon from '@mui/icons-material/Snowboarding';
+import ShareIcon from '@mui/icons-material/Share';
 import Materia86 from './components/Materia86';
 import Materia23 from './components/Materia23';
+import ShareDialog from './components/ShareDialog';
 
 function App() {
   const [creditos, setCreditos] = useState(0);
@@ -15,6 +17,8 @@ function App() {
   const [creditosTransicion, setCreditosTransicion] = useState(0);
   const [materias86, setMaterias86] = useMaterias86("materias86-calculadorBilbao", []);
   const [materias23, setMaterias23] = useState([]);
+  const [shareDialogOpen, setShareDialogOpen] = useState(false);
+  const [shareCode, setShareCode] = useState("");
 
   const agregarMateria86 = (materia) => {
     if (materias86.includes(materia)) return;
@@ -44,6 +48,46 @@ function App() {
   const eliminarMateria86 = (materia) => {
     setMaterias86(materias86.filter(m => m.nombre !== materia.nombre));
   };
+
+  const exportar = () => {
+    let bits = "";
+    let hexa = "";
+
+    materias_plan86.obligatorias.forEach(materia => {
+      const bit = (materias86.some(m => m.nombre === materia.nombre)) ? "1" : "0";
+      bits = bit + bits;
+      if (bits.length === 4) {
+        hexa += parseInt(bits, 2).toString(16);
+        bits = "";
+      }
+    });
+
+    materias_plan86.orientaciones.forEach(orientacion => {
+      orientacion.materias.forEach(materia => {
+        const bit = (materias86.some(m => m.nombre === materia.nombre)) ? "1" : "0";
+        bits = bit + bits;
+        if (bits.length === 4) {
+          hexa += parseInt(bits, 2).toString(16);
+          bits = "";
+        }
+      });
+    });
+
+    materias_plan86.electivas.forEach(materia => {
+      const bit = (materias86.some(m => m.nombre === materia.nombre)) ? "1" : "0";
+      bits = bit + bits;
+      if (bits.length === 4) {
+        hexa += parseInt(bits, 2).toString(16);
+        bits = "";
+      }
+    });
+
+    if (bits.length > 0)
+      hexa += parseInt(bits, 2).toString(16);
+
+    setShareCode(hexa);
+    setShareDialogOpen(true);
+  }
 
   useEffect(() => {
     let _materias23 = [];
@@ -95,7 +139,7 @@ function App() {
                 variant="contained"
                 color="primary"
                 startIcon={<SnowboardingIcon />}
-                sx={{ maxWidth: "300px", marginBottom: "1em" }}
+                sx={{ marginBottom: "1em" }}
                 onClick={seleccionarTodasObligatorias86}
               >
                 Aprobar obligatorias
@@ -103,13 +147,24 @@ function App() {
 
               <Button
                 variant="contained"
-                color="secondary"
+                color="error"
                 startIcon={<DeleteIcon />}
-                sx={{ maxWidth: "300px" }}
+                sx={{ marginBottom: "1em" }}
                 onClick={limpiarTodo}
               >
                 Limpiar todo
               </Button>
+
+              <Button
+                variant="contained"
+                color="success"
+                startIcon={<ShareIcon />}
+                onClick={exportar}
+              >
+                Compartir
+              </Button>
+
+              <ShareDialog codigo={shareCode} open={shareDialogOpen} onClose={() => setShareDialogOpen(false)} />
             </FormGroup>
           </Paper>
         </Grid>
