@@ -1,5 +1,5 @@
 import './App.css';
-import { Checkbox, FormGroup, FormControlLabel, FormLabel, Grid, Paper, Box, Button, Alert, AlertTitle } from '@mui/material';
+import { Checkbox, FormGroup, FormControlLabel, FormLabel, Grid, Paper, Box, Button, Alert, AlertTitle, Link } from '@mui/material';
 import materias_plan86 from "./plan_86.json";
 import materias_plan23 from "./plan_23.json";
 import { useEffect, useState } from 'react';
@@ -123,14 +123,12 @@ function App() {
           <Paper elevation={3} sx={{padding: "1em"}}>
             <h2>Calculadora transición plan 86 a 2023</h2>
             <FormGroup>
-
-
               {
                 readOnly ? (
                   <Alert severity="info">
                     <AlertTitle>Modo de solo lectura</AlertTitle>
                      Esta pantalla es solo compartir tu estado actual.<br />
-                     En caso de querer modificarlo, ingresa en la <a href={WEB_URL}>pantalla principal</a>.
+                     En caso de querer modificarlo, ingresa en la <Link href={WEB_URL}>pantalla principal</Link>.
                   </Alert>
                 ) : (
                     <>
@@ -153,14 +151,15 @@ function App() {
                     >
                       Limpiar todo
                     </Button>
+
                     <Button
                       variant="contained"
                       color="success"
                       startIcon={<ShareIcon />}
                       onClick={compartir}
-                      >
+                    >
                       Compartir
-                     </Button>
+                    </Button>
                   </>
                 )
               }
