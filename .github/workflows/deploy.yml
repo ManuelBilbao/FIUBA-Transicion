@@ -23,7 +23,7 @@ jobs:
     - name: Build page
       run: npm run build
       env:
-        - REACT_APP_WEB_URL: ${{ vars.REACT_APP_WEB_URL }}
+        REACT_APP_WEB_URL: ${{ vars.REACT_APP_WEB_URL }}
 
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
