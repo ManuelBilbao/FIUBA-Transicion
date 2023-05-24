@@ -55,7 +55,7 @@ function App() {
 
   const compartir = () => {
     let bits = "";
-    let hexa = "";
+    let hexa = ["informatica", "industrial"].indexOf(carrera).toString(16);
 
     materiasPlan86.obligatorias.forEach(materia => {
       bits += (materias86.some(m => m.nombre === materia.nombre)) ? "1" : "0";
