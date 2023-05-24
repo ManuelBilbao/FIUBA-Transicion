@@ -1,0 +1,259 @@
+[
+    {
+        "nombre": "Análisis Matemático II",
+        "equivalencias": [
+            {
+                "materias": ["Análisis Matemático II B"],
+                "creditos": 0
+            }
+        ]
+    },
+    {
+        "nombre": "Algoritmos y Estructura de Datos",
+        "equivalencias": [
+            {
+                "materias": ["Algoritmos y Programación II"],
+                "creditos": 0
+            }
+        ]
+    },
+    {
+        "nombre": "Introducción al Desarrollo de Software",
+        "equivalencias": [
+            {
+                "materias": ["Algoritmos y Programación I"],
+                "creditos": 0
+            }
+        ]
+    },
+    {
+        "nombre": "Álgebra Lineal",
+        "equivalencias": [
+            {
+                "materias": ["Álgebra II A"],
+                "creditos": 0
+            }
+        ]
+    },
+    {
+        "nombre": "Organización del Computador",
+        "equivalencias": [
+            {
+                "materias": ["Estructura del Computador"],
+                "creditos": 0
+            }
+        ]
+    },
+    {
+        "nombre": "Paradigmas de Programación",
+        "equivalencias": [
+            {
+                "materias": ["Algoritmos y Programación III"],
+                "creditos": 0
+            }
+        ]
+    },
+    {
+        "nombre": "Probabilidad y Estadística",
+        "equivalencias": [
+            {
+                "materias": ["Probabilidad y Estadística B"],
+                "creditos": 0
+            }
+        ]
+    },
+    {
+        "nombre": "Teoría de Algoritmos",
+        "equivalencias": [
+            {
+                "materias": ["Teoría de Algoritmos I"],
+                "creditos": -6
+            },
+            {
+                "materias": ["Modelos y Optimización I"],
+                "creditos": -6
+            },
+            {
+                "materias": ["Matemática Discreta"],
+                "creditos": -8
+            }
+        ]
+    },
+    {
+        "nombre": "Sistemas Operativos",
+        "equivalencias": [
+            {
+                "materias": ["Sistemas Operativos"],
+                "creditos": 0
+            }
+        ]
+    },
+    {
+        "nombre": "Lenguajes y Compiladores I",
+        "equivalencias": [
+            {
+                "materias": ["Lenguajes de Programación"],
+                "creditos": -6
+            },
+            {
+                "materias": ["Teoría de Lenguaje"],
+                "creditos": -4
+            },
+            {
+                "materias": ["Lenguajes Formales"],
+                "creditos": -6
+            }
+        ]
+    },
+    {
+        "nombre": "Base de Datos",
+        "equivalencias": [
+            {
+                "materias": ["Base de Datos"],
+                "creditos": 0
+            }
+        ]
+    },
+    {
+        "nombre": "Modelación Numérica",
+        "equivalencias": [
+            {
+                "materias": ["Análisis Numérico I"],
+                "creditos": 0
+            }
+        ]
+    },
+    {
+        "nombre": "Taller de Programación",
+        "equivalencias": [
+            {
+                "materias": ["Taller de Programación I"],
+                "creditos": 0
+            }
+        ]
+    },
+    {
+        "nombre": "Ingeniería de Software I",
+        "equivalencias": [
+            {
+                "materias": ["Análisis de la Información"],
+                "creditos": 0
+            }
+        ]
+    },
+    {
+        "nombre": "Ciencia de Datos",
+        "equivalencias": [
+            {
+                "materias": ["Organización de Datos"],
+                "creditos": 0
+            }
+        ]
+    },
+    {
+        "nombre": "Ingeniería de Software II",
+        "equivalencias": [
+            {
+                "materias": ["Técnicas de Diseño"],
+                "creditos": 0
+            },
+            {
+                "materias": ["Taller de Programación II"],
+                "creditos": -4
+            }
+        ]
+    },
+    {
+        "nombre": "Programación Concurrente",
+        "equivalencias": [
+            {
+                "materias": ["Técnicas de Programación Concurrente"],
+                "creditos": 0
+            }
+        ]
+    },
+    {
+        "nombre": "Redes",
+        "equivalencias": [
+            {
+                "materias": ["Introducción a los Sistemas Distribuidos"],
+                "creditos": 0
+            }
+        ]
+    },
+    {
+        "nombre": "Física para Informática",
+        "equivalencias": [
+            {
+                "materias": ["Física II A"],
+                "creditos": 0
+            }
+        ]
+    },
+    {
+        "nombre": "Empresas de Base Tecnológica I",
+        "equivalencias": [
+            {
+                "materias": ["Legislación y Ejercicio Profesional de la Ingeniería en Informática", "Ingeniería Económica"],
+                "creditos": -10
+            },
+            {
+                "materias": ["Legislación y Ejercicio Profesional de la Ingeniería en Informática", "Estructura Económica Argentina"],
+                "creditos": -8
+            }
+        ]
+    },
+    {
+        "nombre": "Gestión del Desarrollo de Sistemas Informáticos",
+        "equivalencias": [
+            {
+                "materias": ["Administración y Control de Proyectos Informáticos I"],
+                "creditos": 0
+            }
+        ]
+    },
+    {
+        "nombre": "Sistemas Distribuidos I",
+        "equivalencias": [
+            {
+                "materias": ["Sistemas Distribuidos I"],
+                "creditos": 0
+            },
+            {
+                "materias": ["Taller de Programación II"],
+                "creditos": -6
+            }
+        ]
+    },
+    {
+        "nombre": "Taller de Seguridad Informática",
+        "equivalencias": [
+            {
+                "materias": ["Criptografía y Seguridad Informática"],
+                "creditos": -6
+            },
+            {
+                "materias": ["Organización de Computadoras"],
+                "creditos": -6
+            }
+        ]
+    },
+    {
+        "nombre": "Empresas de Base Tecnológica II",
+        "equivalencias": [
+            {
+                "materias": ["Estructura de las Organizaciones"],
+                "creditos": -6
+            }
+        ]
+    },
+    {
+        "nombre": "Exámen Inglés",
+        "equivalencias": [
+            {
+                "materias": ["Idioma Inglés"],
+                "creditos": 0
+            }
+        ]
+    }
+]

@@ -1,17 +1,16 @@
 import { useState } from "react";
 import { FormControlLabel, Checkbox, List, ListItem, Typography, Popover } from "@mui/material";
 import InfoIcon from '@mui/icons-material/Info';
-import materias_plan86 from "../plan_86.json";
 
 function Materia23(props) {
-  const {materia, checked} = props;
+  const {materiasPlan86, materia, checked} = props;
 
   const [popoverAnchor, setPopoverAnchor] = useState(null);
 
   const creditosExtraNecesarios = (equivalencia) => {
     return 0 - equivalencia.creditos
-      - materias_plan86.obligatorias.filter(m => equivalencia.materias.includes(m.nombre)).reduce((a, b) => a.creditosExtra??0 + b.creditosExtra??0, 0)
-      - materias_plan86.electivas.filter(m => equivalencia.materias.includes(m.nombre)).reduce((a, b) => a.creditosExtra??0 + b.creditosExtra??0, 0)
+      - materiasPlan86.obligatorias.filter(m => equivalencia.materias.includes(m.nombre)).reduce((a, b) => a.creditosExtra??0 + b.creditosExtra??0, 0)
+      - materiasPlan86.electivas.filter(m => equivalencia.materias.includes(m.nombre)).reduce((a, b) => a.creditosExtra??0 + b.creditosExtra??0, 0)
   }
 
   return (

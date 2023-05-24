@@ -1,7 +1,5 @@
 import './App.css';
-import { Checkbox, FormGroup, FormControlLabel, FormLabel, Grid, Paper, Box, Button, Alert, AlertTitle, Link } from '@mui/material';
-import materias_plan86 from "./plan_86.json";
-import materias_plan23 from "./plan_23.json";
+import { Checkbox, FormGroup, FormControl, FormControlLabel, FormLabel, InputLabel, Select, MenuItem, Grid, Paper, Box, Button, Alert, AlertTitle, Link } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useMaterias86 } from './utils/useMaterias86';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -15,6 +13,8 @@ import ShareDialog from './components/ShareDialog';
 const WEB_URL = process.env.REACT_APP_WEB_URL;
 
 function App() {
+  const [materiasPlan86, setMateriasPlan86] = useState(require(`./planes/informatica/plan_86.json`));
+  const [materiasPlan23, setMateriasPlan23] = useState(require(`./planes/informatica/plan_23.json`));
   const [creditos, setCreditos] = useState(0);
   const [creditosDirectos, setCreditosDirectos] = useState(0);
   const [creditosTransicion, setCreditosTransicion] = useState(0);
@@ -22,6 +22,7 @@ function App() {
   const [materias23, setMaterias23] = useState([]);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [shareCode, setShareCode] = useState("");
+  const [carrera, setCarrera] = useState("informatica");
 
   const agregarMateria86 = (materia) => {
     if (materias86.includes(materia)) return;
@@ -37,7 +38,7 @@ function App() {
   };
 
   const seleccionarTodasObligatorias86 = () => {
-    agregarMaterias86(materias_plan86.obligatorias);
+    agregarMaterias86(materiasPlan86.obligatorias);
   };
 
   const limpiarTodo = () => {
@@ -56,17 +57,17 @@ function App() {
     let bits = "";
     let hexa = "";
 
-    materias_plan86.obligatorias.forEach(materia => {
+    materiasPlan86.obligatorias.forEach(materia => {
       bits += (materias86.some(m => m.nombre === materia.nombre)) ? "1" : "0";
     });
 
-    materias_plan86.orientaciones.forEach(orientacion => {
+    materiasPlan86.orientaciones.forEach(orientacion => {
       orientacion.materias.forEach(materia => {
         bits += (materias86.some(m => m.nombre === materia.nombre)) ? "1" : "0";
       });
     });
 
-    materias_plan86.electivas.forEach(materia => {
+    materiasPlan86.electivas.forEach(materia => {
       bits += (materias86.some(m => m.nombre === materia.nombre)) ? "1" : "0";
     });
 
@@ -87,7 +88,7 @@ function App() {
       return materias.every(materia => materias86.map(m => m.nombre).includes(materia))
     };
 
-    materias_plan23.forEach(materia => {
+    materiasPlan23.forEach(materia => {
       if (materia.equivalencias === undefined) return;
 
       for (let i = 0; i < materia.equivalencias.length; i++) {
@@ -115,6 +116,11 @@ function App() {
   useEffect(() => {
     setCreditos(creditosDirectos + creditosTransicion);
   }, [creditosDirectos, creditosTransicion]);
+
+  useEffect(() => {
+    setMateriasPlan86(require(`./planes/${carrera}/plan_86.json`));
+    setMateriasPlan23(require(`./planes/${carrera}/plan_23.json`));
+  }, [carrera]);
 
   return (
     <Box sx={{flexGrow: 1}} padding={2}>
@@ -167,13 +173,26 @@ function App() {
             </FormGroup>
           </Paper>
         </Grid>
+        <Grid item xs={12} sm="auto" sx={{ marginLeft: "auto" }}>
+          <FormControl sx={{ minWidth: "20em" }}>
+            <InputLabel>Carrera</InputLabel>
+            <Select
+              value={carrera}
+              label="Carrera"
+              onChange={(e) => setCarrera(e.target.value)}
+            >
+              <MenuItem value="informatica">Ingeniería en Informática</MenuItem>
+              <MenuItem value="industrial">Ingeniería Industrial</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={12} md={4}>
           <Paper elevation={3} sx={{padding: "1em", marginBottom: "2em"}}>
             <h2>Obligatorias</h2>
             <FormGroup>
-              {materias_plan86.obligatorias.map((materia, idx) =>
+              {materiasPlan86.obligatorias.map((materia, idx) =>
                 <Materia86
                   key={`${materia.nombre}-86`}
                   materia={materia}
@@ -187,7 +206,7 @@ function App() {
           </Paper>
           <Paper elevation={3} sx={{padding: "1em", marginBottom: "2em"}}>
             <h2>Orientación</h2>
-            {materias_plan86.orientaciones.map((orientacion, idx) =>
+            {materiasPlan86.orientaciones.map((orientacion, idx) =>
               <FormGroup key={orientacion.nombre} sx={{marginBottom: "1em"}}>
                 <FormLabel>{orientacion.nombre}</FormLabel>
                 {orientacion.materias.map((materia, idx) =>
@@ -208,7 +227,7 @@ function App() {
           <Paper elevation={3} sx={{padding: "1em"}}>
             <h2>Electivas</h2>
             <FormGroup>
-              {materias_plan86.electivas.map(materia =>
+              {materiasPlan86.electivas.map(materia =>
                 <Materia86
                   key={`${materia.nombre}-86`}
                   materia={materia}
@@ -225,9 +244,10 @@ function App() {
           <Paper sx={{padding: "1em"}}>
             <h2>Plan 2023</h2>
             <FormGroup>
-              {materias_plan23.map(materia =>
+              {materiasPlan23.map(materia =>
                 <Materia23
                   key={`${materia.nombre}-23`}
+                  materiasPlan86={materiasPlan86}
                   materia={materia}
                   checked={materias23.includes(materia.nombre)}
                 />

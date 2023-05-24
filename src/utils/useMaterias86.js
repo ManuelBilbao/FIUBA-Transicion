@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import plan86 from '../plan_86.json';
 
 function decode(code) {
+  const carrera = ["informatica", "industrial"][parseInt(code[0], 16)];
+  const plan86 = require(`../planes/${carrera}/plan_86.json`);
+  
   let bits = "";
-  for (let i = 0; i < code.length; i++) {
+  for (let i = 1; i < code.length; i++) {
     bits += parseInt(code[i], 16).toString(2).padStart(4, 0);
   }
 
