@@ -79,6 +79,13 @@ function App() {
     setShareDialogOpen(true);
   }
 
+  const cambiarCarrera = (carreraNueva) => {
+    if (window.confirm("Se van a limpiar todos los campos. ¿Continuar?")) {
+      limpiarTodo();
+      setCarrera(carreraNueva);
+    }
+  }
+
   useEffect(() => {
     let _materias23 = [];
     let _creditos = 0;
@@ -111,7 +118,7 @@ function App() {
 
     setMaterias23(_materias23);
     setCreditosTransicion(_creditos);
-  }, [materias86]);
+  }, [materias86, materiasPlan86]);
 
   useEffect(() => {
     setCreditos(creditosDirectos + creditosTransicion);
@@ -179,7 +186,7 @@ function App() {
             <Select
               value={carrera}
               label="Carrera"
-              onChange={(e) => setCarrera(e.target.value)}
+              onChange={(e) => {cambiarCarrera(e.target.value)}}
             >
               <MenuItem value="informatica">Ingeniería en Informática</MenuItem>
               <MenuItem value="industrial">Ingeniería Industrial</MenuItem>
