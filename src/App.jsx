@@ -1,5 +1,5 @@
 import './App.css';
-import { Checkbox, FormGroup, FormControlLabel, FormLabel, Grid, Paper, Box, Button, Alert, AlertTitle, Link } from '@mui/material';
+import { Checkbox, FormGroup, FormControlLabel, FormLabel, Grid, Paper, Box, Button, Alert, AlertTitle, Link, Typography } from '@mui/material';
 import materias_plan86 from "./plan_86.json";
 import materias_plan23 from "./plan_23.json";
 import { useCallback, useEffect, useState } from 'react';
@@ -209,6 +209,7 @@ function App() {
           <Paper elevation={3} sx={{padding: "1em", marginBottom: "2em"}}>
             <h2>Créditos extra</h2>
             <ExtraCredits value={creditosExtra} setValue={setCreditosExtra} disabled={readOnly} />
+            <Typography variant='caption'>Agregá acá si tenés créditos extra obtenidos por fuera del plan.</Typography>
           </Paper>
         </Grid>
         <Grid item xs={12} md={4}>
