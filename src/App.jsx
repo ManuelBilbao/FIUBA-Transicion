@@ -10,6 +10,8 @@ import ShareIcon from '@mui/icons-material/Share';
 import Materia86 from './components/Materia86';
 import Materia23 from './components/Materia23';
 import ShareDialog from './components/ShareDialog';
+import ExtraCredits from './components/ExtraCredits';
+import { useExtraCredits } from './utils/useExtraCredits';
 
 
 const WEB_URL = process.env.REACT_APP_WEB_URL;
@@ -18,6 +20,7 @@ function App() {
   const [creditos, setCreditos] = useState(0);
   const [creditosDirectos, setCreditosDirectos] = useState(0);
   const [creditosTransicion, setCreditosTransicion] = useState(0);
+  const [creditosExtra, setCreditosExtra] = useExtraCredits("xcredits", 0);
   const [materias86, setMaterias86, readOnly] = useMaterias86("materias86-calculadorBilbao", []);
   const [materias23, setMaterias23] = useState([]);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
@@ -113,8 +116,8 @@ function App() {
   }, [materias86]);
 
   useEffect(() => {
-    setCreditos(creditosDirectos + creditosTransicion);
-  }, [creditosDirectos, creditosTransicion]);
+    setCreditos(creditosDirectos + creditosExtra + creditosTransicion);
+  }, [creditosDirectos, creditosExtra, creditosTransicion]);
 
   return (
     <Box sx={{flexGrow: 1}} padding={2}>
@@ -163,7 +166,7 @@ function App() {
                   </>
                 )
               }
-              <ShareDialog codigo={shareCode} open={shareDialogOpen} onClose={() => setShareDialogOpen(false)} />
+              <ShareDialog codigo={shareCode} creditos={creditosExtra} open={shareDialogOpen} onClose={() => setShareDialogOpen(false)} />
             </FormGroup>
           </Paper>
         </Grid>
@@ -202,6 +205,10 @@ function App() {
                 )}
               </FormGroup>
             )}
+          </Paper>
+          <Paper elevation={3} sx={{padding: "1em", marginBottom: "2em"}}>
+            <h2>Créditos extra</h2>
+            <ExtraCredits value={creditosExtra} setValue={setCreditosExtra} disabled={readOnly} />
           </Paper>
         </Grid>
         <Grid item xs={12} md={4}>

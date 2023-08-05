@@ -4,9 +4,9 @@ import FileCopyIcon from '@mui/icons-material/FileCopy';
 
 const WEB_URL = process.env.REACT_APP_WEB_URL;
 
-function ShareDialog({ open, onClose, codigo }) {
+function ShareDialog({ open, onClose, codigo, creditos }) {
   const [copied, setCopied] = useState(false);
-  const url = `${WEB_URL}?code=${codigo.toUpperCase()}`;
+  const url = `${WEB_URL}?code=${codigo.toUpperCase()}&xcredits=${creditos}`;
 
   const handleCopy = async () => {
     try {
