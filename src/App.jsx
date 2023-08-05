@@ -86,6 +86,8 @@ function App() {
     let _creditos = 0;
     let taller2Usada = false;
 
+    const creditos86 = materias86.map(m => m.creditos).reduce((a, b) => a + b, 0);
+
     const tieneMaterias = (materias) => {
       return materias.every(materia => materias86.map(m => m.nombre).includes(materia))
     };
@@ -94,6 +96,14 @@ function App() {
       if (materia.equivalencias === undefined) return;
 
       for (let i = 0; i < materia.equivalencias.length; i++) {
+        if (materia.equivalencias[i].creditosNecesarios !== undefined && materia.equivalencias[i].creditosNecesarios <= creditos86) {
+          _materias23.push(materia.nombre);
+          break;
+        }
+
+        if (materia.equivalencias[i].materias.length === 0)
+          continue;
+
         if (taller2Usada && materia.equivalencias[i].materias.includes("Taller de Programación II"))
           continue;
 
