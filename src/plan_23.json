@@ -9,10 +9,10 @@
         ]
     },
     {
-        "nombre": "Algoritmos y Estructura de Datos",
+        "nombre": "Fundamentos de Programación",
         "equivalencias": [
             {
-                "materias": ["Algoritmos y Programación II"],
+                "materias": ["Algoritmos y Programación I"],
                 "creditos": 0
             }
         ]
@@ -21,8 +21,9 @@
         "nombre": "Introducción al Desarrollo de Software",
         "equivalencias": [
             {
-                "materias": ["Algoritmos y Programación I"],
-                "creditos": 0
+                "materias": [],
+                "creditos": 0,
+                "creditosNecesarios": 58
             }
         ]
     },
@@ -40,6 +41,15 @@
         "equivalencias": [
             {
                 "materias": ["Estructura del Computador"],
+                "creditos": 0
+            }
+        ]
+    },
+    {
+        "nombre": "Algoritmos y Estructura de Datos",
+        "equivalencias": [
+            {
+                "materias": ["Algoritmos y Programación II"],
                 "creditos": 0
             }
         ]
@@ -85,23 +95,6 @@
             {
                 "materias": ["Sistemas Operativos"],
                 "creditos": 0
-            }
-        ]
-    },
-    {
-        "nombre": "Lenguajes y Compiladores I",
-        "equivalencias": [
-            {
-                "materias": ["Lenguajes de Programación"],
-                "creditos": -6
-            },
-            {
-                "materias": ["Teoría de Lenguaje"],
-                "creditos": -4
-            },
-            {
-                "materias": ["Lenguajes Formales"],
-                "creditos": -6
             }
         ]
     },
