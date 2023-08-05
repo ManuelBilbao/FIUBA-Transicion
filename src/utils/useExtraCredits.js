@@ -1,42 +1,28 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import plan86 from '../plan_86.json';
 
-function decode(code) {
-  let bits = "";
-  for (let i = 0; i < code.length; i++) {
-    bits += parseInt(code[i], 16).toString(2).padStart(4, 0);
-  }
-
-  let materias = [];
-  materias = materias.concat(plan86.obligatorias.filter((materia, idx) => bits[idx] === "1"));
-  let offset = plan86.obligatorias.length;
-  plan86.orientaciones.forEach(orientacion => {
-    materias = materias.concat(orientacion.materias.filter((materia, idx) => bits[idx+offset] === "1"));
-    offset += orientacion.materias.length;
-  });
-  materias = materias.concat(plan86.electivas.filter((materia, idx) => bits[idx+offset] === "1"));
-  return materias;
-}
-
-export function useMaterias86(key, initialValue) {
+export function useExtraCredits(key, initialValue) {
   // State to store our value
   // Pass initial state function to useState so logic is only executed once
-  const [readOnly, setReadOnly] = useState(false);
+  const readOnly = (new URLSearchParams(document.location.search).get("code")) !== null;
   const [storedValue, setStoredValue] = useState(() => {
     if (typeof window === "undefined") {
       return initialValue;
     }
     try {
-      const shareCode = new URLSearchParams(document.location.search).get("code");
-      if (shareCode !== null) {
-        const values = decode(shareCode);
-        setReadOnly(true);
-        return values;
+      const value = new URLSearchParams(document.location.search).get("xcredits");
+
+      if (value !== null) {
+        const credits = parseInt(value);
+        return credits;
       }
+
+      if (readOnly)
+        return initialValue;
+
       // Get from local storage by key
       const item = window.localStorage.getItem(key);
       // Parse stored json or if none return initialValue
-      return item ? JSON.parse(item) : initialValue;
+      return item ? parseInt(item) : initialValue;
     } catch (error) {
       // If error also return initialValue
       console.log(error);
@@ -52,8 +38,11 @@ export function useMaterias86(key, initialValue) {
     setValueRef.current = (value) => {
       try {
         // Allow value to be a function so we have same API as useState
-        const valueToStore =
-        value instanceof Function ? value(storedValue) : value;
+        let valueToStore =
+          value instanceof Function ? value(storedValue) : value;
+
+        if (isNaN(valueToStore))
+          valueToStore = 0;
 
         // Save state
         setStoredValue(value);
@@ -63,7 +52,7 @@ export function useMaterias86(key, initialValue) {
 
         // Save to local storage
         if (typeof window !== "undefined") {
-          window.localStorage.setItem(key, JSON.stringify(valueToStore));
+          window.localStorage.setItem(key, valueToStore);
         }
       } catch (error) {
         // A more advanced implementation would handle the error case
@@ -76,5 +65,5 @@ export function useMaterias86(key, initialValue) {
     setValueRef.current(value)
   }, []);
 
-  return [storedValue ??[], setValue, readOnly];
+  return [storedValue ??[], setValue];
 }
