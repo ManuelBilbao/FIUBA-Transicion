@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { FormControlLabel, Checkbox, List, ListItem, Typography, Popover } from "@mui/material";
 import InfoIcon from '@mui/icons-material/Info';
 import materias_plan86 from "../plan_86.json";
@@ -51,4 +51,4 @@ function Materia23(props) {
   );
 }
     
-export default Materia23;
+export default React.memo(Materia23);
