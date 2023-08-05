@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import plan86 from '../plan_86.json';
 
 function decode(code) {
@@ -19,42 +19,47 @@ function decode(code) {
 }
 
 export function useMaterias86(key, initialValue) {
-    // State to store our value
-    // Pass initial state function to useState so logic is only executed once
-    const [readOnly, setReadOnly] = useState(false);
-    const [storedValue, setStoredValue] = useState(() => {
-      if (typeof window === "undefined") {
-        return initialValue;
+  // State to store our value
+  // Pass initial state function to useState so logic is only executed once
+  const [readOnly, setReadOnly] = useState(false);
+  const [storedValue, setStoredValue] = useState(() => {
+    if (typeof window === "undefined") {
+      return initialValue;
+    }
+    try {
+      const shareCode = new URLSearchParams(document.location.search).get("code");
+      if (shareCode !== null) {
+        const values = decode(shareCode);
+        setReadOnly(true);
+        return values;
       }
-      try {
-        const shareCode = new URLSearchParams(document.location.search).get("code");
-        if (shareCode !== null) {
-          const values = decode(shareCode);
-          setReadOnly(true);
-          return values;
-        }
-        // Get from local storage by key
-        const item = window.localStorage.getItem(key);
-        // Parse stored json or if none return initialValue
-        return item ? JSON.parse(item) : initialValue;
-      } catch (error) {
-        // If error also return initialValue
-        console.log(error);
-        return initialValue;
-      }
-    });
-    // Return a wrapped version of useState's setter function that ...
-    // ... persists the new value to localStorage.
-    const setValue = (value) => {
+      // Get from local storage by key
+      const item = window.localStorage.getItem(key);
+      // Parse stored json or if none return initialValue
+      return item ? JSON.parse(item) : initialValue;
+    } catch (error) {
+      // If error also return initialValue
+      console.log(error);
+      return initialValue;
+    }
+  });
+
+  const setValueRef = useRef();
+
+  // Return a wrapped version of useState's setter function that ...
+  // ... persists the new value to localStorage.
+  useEffect(() => {
+    setValueRef.current = (value) => {
       try {
         // Allow value to be a function so we have same API as useState
         const valueToStore =
-          value instanceof Function ? value(storedValue) : value;
+        value instanceof Function ? value(storedValue) : value;
+
         // Save state
-        setStoredValue(valueToStore);
+        setStoredValue(value);
 
         if (readOnly)
-          return;
+        return;
 
         // Save to local storage
         if (typeof window !== "undefined") {
@@ -64,6 +69,12 @@ export function useMaterias86(key, initialValue) {
         // A more advanced implementation would handle the error case
         console.log(error);
       }
-    };
-    return [storedValue ??[], setValue, readOnly];
-  }
+    }
+  }, [key, readOnly, storedValue]);
+
+  const setValue = useCallback((value) => {
+    setValueRef.current(value)
+  }, []);
+
+  return [storedValue ??[], setValue, readOnly];
+}

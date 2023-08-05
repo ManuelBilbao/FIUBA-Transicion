@@ -2,7 +2,7 @@ import './App.css';
 import { Checkbox, FormGroup, FormControlLabel, FormLabel, Grid, Paper, Box, Button, Alert, AlertTitle, Link } from '@mui/material';
 import materias_plan86 from "./plan_86.json";
 import materias_plan23 from "./plan_23.json";
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useMaterias86 } from './utils/useMaterias86';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SnowboardingIcon from '@mui/icons-material/Snowboarding';
@@ -23,18 +23,18 @@ function App() {
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [shareCode, setShareCode] = useState("");
 
-  const agregarMateria86 = (materia) => {
-    if (materias86.includes(materia)) return;
+  const agregarMateria86 = useCallback((materia) => {
+    setMaterias86(materias =>
+    	materias.includes(materia) ? materias : materias.concat(materia)
+    );
+  }, [setMaterias86]);
 
-    setMaterias86(materias86.concat(materia));
-  };
-
-  const agregarMaterias86 = (materias) => {
+  const agregarMaterias86 = useCallback((materias) => {
     const filtradas = materias.filter(materia => !materias86.map(m => m.nombre).includes(materia.nombre));
     if (filtradas.length === 0) return;
 
     setMaterias86(materias86.concat(filtradas));
-  };
+  }, [materias86, setMaterias86]);
 
   const seleccionarTodasObligatorias86 = () => {
     agregarMaterias86(materias_plan86.obligatorias);
@@ -48,9 +48,9 @@ function App() {
     setMaterias23([]);
   };
 
-  const eliminarMateria86 = (materia) => {
-    setMaterias86(materias86.filter(m => m.nombre !== materia.nombre));
-  };
+  const eliminarMateria86 = useCallback((materia) => {
+    setMaterias86(materias => materias.filter(m => m.nombre !== materia.nombre));
+  }, [setMaterias86]);
 
   const compartir = () => {
     let bits = "";

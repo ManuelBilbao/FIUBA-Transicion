@@ -1,5 +1,5 @@
 import { FormControlLabel, Checkbox } from "@mui/material";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 function Materia86(props) {
   const {materia, checked, onCheck, onUncheck, disabled} = props;
@@ -46,4 +46,4 @@ function Materia86(props) {
   );
 }
   
-  export default Materia86;
+ export default React.memo(Materia86);
