@@ -163,7 +163,8 @@
                 "materias": ["Técnicas de Programación Concurrente"],
                 "creditos": 0
             }
-        ]
+        ],
+        "canjeable": 6
     },
     {
         "nombre": "Redes",
@@ -203,7 +204,8 @@
                 "materias": ["Administración y Control de Proyectos Informáticos I"],
                 "creditos": 0
             }
-        ]
+        ],
+        "canjeable": 6
     },
     {
         "nombre": "Sistemas Distribuidos I",
@@ -216,7 +218,8 @@
                 "materias": ["Taller de Programación II"],
                 "creditos": -6
             }
-        ]
+        ],
+        "canjeable": 6
     },
     {
         "nombre": "Taller de Seguridad Informática",
@@ -229,7 +232,8 @@
                 "materias": ["Organización de Computadoras"],
                 "creditos": -6
             }
-        ]
+        ],
+        "canjeable": 8
     },
     {
         "nombre": "Empresas de Base Tecnológica II",
