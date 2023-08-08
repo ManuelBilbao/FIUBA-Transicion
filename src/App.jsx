@@ -58,14 +58,6 @@ function App() {
     setMaterias86(materias => materias.filter(m => m.nombre !== materia.nombre));
   }, [setMaterias86]);
 
-  const agregarMateriaTrayectoria = useCallback((materia) => {
-    setMateriasCanjeadas(materiasCanjeadas.concat(materia.nombre));
-  }, [setMateriasCanjeadas, materiasCanjeadas]);
-
-  const eliminarMateriaTrayectoria = useCallback((materia) => {
-    setMateriasCanjeadas(materiasCanjeadas.filter(m => m !== materia.nombre));
-  }, [setMateriasCanjeadas, materiasCanjeadas]);
-
   const compartir = () => {
     let bits = "";
     let hexa = "";
@@ -296,8 +288,8 @@ function App() {
                     checked={materiasCanjeadas.includes(materia.nombre) || materias23.includes(materia.nombre)}
                     aprobada={materias23.includes(materia.nombre)}
                     disponible={creditos - creditosCanje - 24 >= materia.canjeable || materiasCanjeadas.includes(materia.nombre)}
-                    onCheck={agregarMateriaTrayectoria}
-                    onUncheck={eliminarMateriaTrayectoria}
+                    onCheck={(m) => setMateriasCanjeadas(materiasCanjeadas.concat(m.nombre))}
+                    onUncheck={(m) => setMateriasCanjeadas(materiasCanjeadas.filter(mat => mat !== m.nombre))}
                   />
                 )}
               </FormGroup>
