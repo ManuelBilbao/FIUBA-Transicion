@@ -135,7 +135,7 @@ function App() {
     const creditosNuevos = creditosDirectos + creditosExtra + creditosTransicion;
     setCreditos(creditosNuevos);
 
-    if (creditosNuevos < CREDITOS_ELECTIVAS_23 + MIN_CREDITOS_CANJE) {
+    if (creditosNuevos < CREDITOS_ELECTIVAS_23 + MIN_CREDITOS_CANJE + creditosCanje) {
       setMateriasCanjeadas([]);
     }
   }, [creditosDirectos, creditosExtra, creditosTransicion]);
