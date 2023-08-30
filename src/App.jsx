@@ -149,7 +149,7 @@ function App() {
     if (_creditosDirectos + creditosExtra + _creditos < CREDITOS_ELECTIVAS_23 + creditosCanje) {
       setMateriasCanjeadas([]);
     }
-  }, [materias86]);
+  }, [materias86, creditosCanje, creditosExtra, setMateriasCanjeadas]);
 
   useEffect(() => {
     setCreditos(creditosDirectos + creditosExtra + creditosTransicion);
