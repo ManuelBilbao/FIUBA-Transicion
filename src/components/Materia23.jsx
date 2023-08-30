@@ -41,7 +41,8 @@ function Materia23(props) {
         <List>
           {materia.equivalencias.map((equivalencia, idx) =>
             <ListItem key={`${materia.nombre}-23-equivalencia${idx}`} sx={{p: 2}}>
-              {equivalencia.materias.join(' + ')}
+              {equivalencia.creditosNecesarios ?? equivalencia.materias.join(' + ')}
+              {equivalencia.creditosNecesarios && " créditos"}
               {creditosExtraNecesarios(equivalencia) > 0 && ` + ${creditosExtraNecesarios(equivalencia)} créditos`}
             </ListItem>
           )}

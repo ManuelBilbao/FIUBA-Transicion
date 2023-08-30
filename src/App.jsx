@@ -1,7 +1,7 @@
 import './App.css';
 import { Checkbox, FormGroup, FormControlLabel, FormLabel, Grid, Paper, Box, Button, Alert, AlertTitle, Link, Typography } from '@mui/material';
 import materias_plan86 from "./plan_86.json";
-import materias_plan23 from "./plan_23.json";
+import plan23 from "./plan_23.json";
 import { useCallback, useEffect, useState } from 'react';
 import { useMaterias86 } from './utils/useMaterias86';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -12,19 +12,26 @@ import Materia23 from './components/Materia23';
 import ShareDialog from './components/ShareDialog';
 import ExtraCredits from './components/ExtraCredits';
 import { useExtraCredits } from './utils/useExtraCredits';
+import { useCanje } from './utils/useCanje';
+import Canje from './components/Canje';
 
 
 const WEB_URL = process.env.REACT_APP_WEB_URL;
+const { creditosElectivas: CREDITOS_ELECTIVAS_23, materias: MATERIAS_PLAN_23 } = plan23;
+const MIN_CREDITOS_CANJE = MATERIAS_PLAN_23.map(materia => materia.canjeable ?? 99).reduce((a, b) => Math.min(a, b))
 
 function App() {
   const [creditos, setCreditos] = useState(0);
   const [creditosDirectos, setCreditosDirectos] = useState(0);
   const [creditosTransicion, setCreditosTransicion] = useState(0);
+  const [creditosCanje, setCreditosCanje] = useState(0);
   const [creditosExtra, setCreditosExtra] = useExtraCredits("xcredits", 0);
-  const [materias86, setMaterias86, readOnly] = useMaterias86("materias86-calculadorBilbao", []);
+  const [materias86, setMaterias86, readOnly] = useMaterias86("materias86-calculadorBilbao2", []);
   const [materias23, setMaterias23] = useState([]);
+  const [materiasCanjeadas, setMateriasCanjeadas] = useCanje("canje", []);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [shareCode, setShareCode] = useState("");
+  const [canjeShareCode, setCanjeShareCode] = useState("");
 
   const agregarMateria86 = useCallback((materia) => {
     setMaterias86(materias =>
@@ -78,6 +85,19 @@ function App() {
     }
 
     setShareCode(hexa);
+
+    bits = "";
+    hexa = "";
+    
+    MATERIAS_PLAN_23.forEach(materia => {
+      bits += (materiasCanjeadas.some(m => m === materia.nombre)) ? "1" : "0";
+    });
+
+    for (let i = 0; i < bits.length; i += 4) {
+      hexa += parseInt(bits.slice(i, i+4), 2).toString(16);
+    }
+
+    setCanjeShareCode(hexa);
     setShareDialogOpen(true);
   }
 
@@ -86,14 +106,24 @@ function App() {
     let _creditos = 0;
     let taller2Usada = false;
 
+    const creditos86 = materias86.map(m => m.creditos).reduce((a, b) => a + b, 0);
+
     const tieneMaterias = (materias) => {
       return materias.every(materia => materias86.map(m => m.nombre).includes(materia))
     };
 
-    materias_plan23.forEach(materia => {
+    MATERIAS_PLAN_23.forEach(materia => {
       if (materia.equivalencias === undefined) return;
 
       for (let i = 0; i < materia.equivalencias.length; i++) {
+        if (materia.equivalencias[i].creditosNecesarios !== undefined && materia.equivalencias[i].creditosNecesarios <= creditos86) {
+          _materias23.push(materia.nombre);
+          break;
+        }
+
+        if (materia.equivalencias[i].materias.length === 0)
+          continue;
+
         if (taller2Usada && materia.equivalencias[i].materias.includes("Taller de Programación II"))
           continue;
 
@@ -109,15 +139,25 @@ function App() {
       }
     });
 
-    setCreditosDirectos(materias86.map(materia => materia.creditosExtra).reduce((a, b) => a + b, 0));
+    const _creditosDirectos = materias86.map(materia => materia.creditosExtra).reduce((a, b) => a + b, 0);
+    setCreditosDirectos(_creditosDirectos);
 
     setMaterias23(_materias23);
     setCreditosTransicion(_creditos);
+    setMateriasCanjeadas(canjeadas => canjeadas.filter(m => !_materias23.includes(m)))
+
+    if (_creditosDirectos + creditosExtra + _creditos < CREDITOS_ELECTIVAS_23 + creditosCanje) {
+      setMateriasCanjeadas([]);
+    }
   }, [materias86]);
 
   useEffect(() => {
     setCreditos(creditosDirectos + creditosExtra + creditosTransicion);
   }, [creditosDirectos, creditosExtra, creditosTransicion]);
+
+  useEffect(() => {
+    setCreditosCanje(MATERIAS_PLAN_23.filter(m => materiasCanjeadas.includes(m.nombre)).map(m => m.canjeable).reduce((a, b) => a + b, 0));
+  }, [materiasCanjeadas]);
 
   return (
     <Box sx={{flexGrow: 1}} padding={2}>
@@ -166,7 +206,7 @@ function App() {
                   </>
                 )
               }
-              <ShareDialog codigo={shareCode} creditos={creditosExtra} open={shareDialogOpen} onClose={() => setShareDialogOpen(false)} />
+              <ShareDialog codigo={shareCode} creditos={creditosExtra} canje={canjeShareCode} open={shareDialogOpen} onClose={() => setShareDialogOpen(false)} />
             </FormGroup>
           </Paper>
         </Grid>
@@ -230,33 +270,59 @@ function App() {
           </Paper>
         </Grid>
         <Grid item xs={12} md={4}>
-          <Paper sx={{padding: "1em"}}>
+          <Paper elevation={3} sx={{padding: "1em", marginBottom: "2em"}}>
             <h2>Plan 2023</h2>
             <FormGroup>
-              {materias_plan23.map(materia =>
+              {MATERIAS_PLAN_23.map(materia =>
                 <Materia23
                   key={`${materia.nombre}-23`}
                   materia={materia}
-                  checked={materias23.includes(materia.nombre)}
+                  checked={materias23.includes(materia.nombre) || materiasCanjeadas.includes(materia.nombre)}
                 />
               )}
               <FormControlLabel
                 control={
                   <Checkbox
                     onClick={e => e.preventDefault()}
-                    indeterminate={creditos > 0 && creditos < 24}
-                    checked={creditos >= 24}
+                    indeterminate={creditos > 0 && creditos < CREDITOS_ELECTIVAS_23}
+                    checked={creditos >= CREDITOS_ELECTIVAS_23}
                   />
                 }
-                label={`Electivas: ${(creditos <= 24) ? creditos : 24}/24`}
+                label={`Electivas: ${(creditos <= CREDITOS_ELECTIVAS_23) ? creditos : CREDITOS_ELECTIVAS_23}/${CREDITOS_ELECTIVAS_23}`}
               />
             </FormGroup>
             {
-              (creditos > 24) ?
-              `Créditos sobrantes: ${creditos - 24}` :
+              (creditos > CREDITOS_ELECTIVAS_23) ?
+              `Créditos sobrantes: ${creditos - CREDITOS_ELECTIVAS_23 - creditosCanje}` :
               null
             }
           </Paper>
+
+          {creditos >= CREDITOS_ELECTIVAS_23 + MIN_CREDITOS_CANJE ?
+            <Paper elevation={3} sx={{padding: "1em"}}>
+              <h2>Canje por trayectoria académica</h2>
+              <Typography variant='caption'>Si ves esto es porque te sobran {MIN_CREDITOS_CANJE} o más créditos. En este caso, podés elegir alguna(s) de las siguientes materias para canjear por esos créditos.</Typography>
+              <FormGroup>
+                {MATERIAS_PLAN_23.filter(m => m.canjeable).map(materia =>
+                  <Canje
+                    key={`${materia.nombre}-23-canje`}
+                    materia={materia}
+                    checked={materiasCanjeadas.includes(materia.nombre) || materias23.includes(materia.nombre)}
+                    aprobada={materias23.includes(materia.nombre)}
+                    disponible={
+                      (
+                        creditos - creditosCanje - CREDITOS_ELECTIVAS_23 >= materia.canjeable
+                        || materiasCanjeadas.includes(materia.nombre)
+                      ) && !readOnly
+                    }
+                    onCheck={(m) => setMateriasCanjeadas(materiasCanjeadas.concat(m.nombre))}
+                    onUncheck={(m) => setMateriasCanjeadas(materiasCanjeadas.filter(mat => mat !== m.nombre))}
+                  />
+                )}
+              </FormGroup>
+            </Paper>
+            : null
+          }
         </Grid>
       </Grid>
     </Box>
