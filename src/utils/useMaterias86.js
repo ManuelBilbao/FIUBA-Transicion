@@ -59,7 +59,6 @@ export function useMaterias86(key, initialValue) {
         window.localStorage.setItem(key, JSON.stringify(migration));
         return migration;
       }
-      return item ? JSON.parse(item) : initialValue;
     } catch (error) {
       // If error also return initialValue
       console.log(error);
