@@ -1,7 +1,7 @@
 import './App.css';
 import { Checkbox, FormGroup, FormControlLabel, FormLabel, Grid, Paper, Box, Button, Alert, AlertTitle, Link, Typography } from '@mui/material';
 import materias_plan86 from "./plan_86.json";
-import materias_plan23 from "./plan_23.json";
+import plan23 from "./plan_23.json";
 import { useCallback, useEffect, useState } from 'react';
 import { useMaterias86 } from './utils/useMaterias86';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -16,6 +16,8 @@ import Canje from './components/Canje';
 
 
 const WEB_URL = process.env.REACT_APP_WEB_URL;
+const { creditosElectivas: CREDITOS_ELECTIVAS_23, materias: MATERIAS_PLAN_23 } = plan23;
+const MIN_CREDITOS_CANJE = MATERIAS_PLAN_23.map(materia => materia.canjeable ?? 99).reduce((a, b) => Math.min(a, b))
 
 function App() {
   const [creditos, setCreditos] = useState(0);
@@ -95,7 +97,7 @@ function App() {
       return materias.every(materia => materias86.map(m => m.nombre).includes(materia))
     };
 
-    materias_plan23.forEach(materia => {
+    MATERIAS_PLAN_23.forEach(materia => {
       if (materia.equivalencias === undefined) return;
 
       for (let i = 0; i < materia.equivalencias.length; i++) {
@@ -130,11 +132,16 @@ function App() {
   }, [materias86]);
 
   useEffect(() => {
-    setCreditos(creditosDirectos + creditosExtra + creditosTransicion);
+    const creditosNuevos = creditosDirectos + creditosExtra + creditosTransicion;
+    setCreditos(creditosNuevos);
+
+    if (creditosNuevos < CREDITOS_ELECTIVAS_23 + MIN_CREDITOS_CANJE) {
+      setMateriasCanjeadas([]);
+    }
   }, [creditosDirectos, creditosExtra, creditosTransicion]);
 
   useEffect(() => {
-    setCreditosCanje(materias_plan23.filter(m => materiasCanjeadas.includes(m.nombre)).map(m => m.canjeable).reduce((a, b) => a + b, 0));
+    setCreditosCanje(MATERIAS_PLAN_23.filter(m => materiasCanjeadas.includes(m.nombre)).map(m => m.canjeable).reduce((a, b) => a + b, 0));
   }, [materiasCanjeadas]);
 
   return (
@@ -251,7 +258,7 @@ function App() {
           <Paper elevation={3} sx={{padding: "1em", marginBottom: "2em"}}>
             <h2>Plan 2023</h2>
             <FormGroup>
-              {materias_plan23.map(materia =>
+              {MATERIAS_PLAN_23.map(materia =>
                 <Materia23
                   key={`${materia.nombre}-23`}
                   materia={materia}
@@ -262,32 +269,32 @@ function App() {
                 control={
                   <Checkbox
                     onClick={e => e.preventDefault()}
-                    indeterminate={creditos > 0 && creditos < 24}
-                    checked={creditos >= 24}
+                    indeterminate={creditos > 0 && creditos < CREDITOS_ELECTIVAS_23}
+                    checked={creditos >= CREDITOS_ELECTIVAS_23}
                   />
                 }
-                label={`Electivas: ${(creditos <= 24) ? creditos : 24}/24`}
+                label={`Electivas: ${(creditos <= CREDITOS_ELECTIVAS_23) ? creditos : CREDITOS_ELECTIVAS_23}/${CREDITOS_ELECTIVAS_23}`}
               />
             </FormGroup>
             {
-              (creditos > 24) ?
-              `Créditos sobrantes: ${creditos - 24 - creditosCanje}` :
+              (creditos > CREDITOS_ELECTIVAS_23) ?
+              `Créditos sobrantes: ${creditos - CREDITOS_ELECTIVAS_23 - creditosCanje}` :
               null
             }
           </Paper>
 
-          {creditos > 30 ?
+          {creditos >= CREDITOS_ELECTIVAS_23 + MIN_CREDITOS_CANJE ?
             <Paper elevation={3} sx={{padding: "1em"}}>
               <h2>Canje por trayectoria académica</h2>
-              <Typography variant='caption'>Si ves esto es porque te sobran 6 o más créditos. En este caso, podés elegir alguna(s) de las siguientes materias para canjear por esos créditos.</Typography>
+              <Typography variant='caption'>Si ves esto es porque te sobran {MIN_CREDITOS_CANJE} o más créditos. En este caso, podés elegir alguna(s) de las siguientes materias para canjear por esos créditos.</Typography>
               <FormGroup>
-                {materias_plan23.filter(m => m.canjeable).map(materia =>
+                {MATERIAS_PLAN_23.filter(m => m.canjeable).map(materia =>
                   <Canje
                     key={`${materia.nombre}-23-canje`}
                     materia={materia}
                     checked={materiasCanjeadas.includes(materia.nombre) || materias23.includes(materia.nombre)}
                     aprobada={materias23.includes(materia.nombre)}
-                    disponible={creditos - creditosCanje - 24 >= materia.canjeable || materiasCanjeadas.includes(materia.nombre)}
+                    disponible={creditos - creditosCanje - CREDITOS_ELECTIVAS_23 >= materia.canjeable || materiasCanjeadas.includes(materia.nombre)}
                     onCheck={(m) => setMateriasCanjeadas(materiasCanjeadas.concat(m.nombre))}
                     onUncheck={(m) => setMateriasCanjeadas(materiasCanjeadas.filter(mat => mat !== m.nombre))}
                   />
