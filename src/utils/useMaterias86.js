@@ -18,6 +18,16 @@ function decode(code) {
   return materias;
 }
 
+function migrate(oldItem) {
+  let materias = plan86.obligatorias.filter(materia => oldItem.some(m => m.nombre === materia.nombre));
+  plan86.orientaciones.forEach(orientacion => {
+    materias = materias.concat(orientacion.materias.filter(materia => oldItem.some(m => m.nombre === materia.nombre)));
+  });
+  materias = materias.concat(plan86.electivas.filter(materia => oldItem.some(m => m.nombre === materia.nombre)));
+  console.log(materias);
+  return materias;
+}
+
 export function useMaterias86(key, initialValue) {
   // State to store our value
   // Pass initial state function to useState so logic is only executed once
@@ -34,8 +44,21 @@ export function useMaterias86(key, initialValue) {
         return values;
       }
       // Get from local storage by key
-      const item = window.localStorage.getItem(key);
-      // Parse stored json or if none return initialValue
+      let item = window.localStorage.getItem(key);
+      // Parse stored json or try to migrate or if none return initialValue
+      if (item) {
+        console.log("Encontrado");
+        return JSON.parse(item);
+      } else {
+        item = window.localStorage.getItem("materias86-calculadorBilbao");
+
+        if (item === null)
+          return initialValue;
+
+        const migration = migrate(JSON.parse(item));
+        window.localStorage.setItem(key, JSON.stringify(migration));
+        return migration;
+      }
       return item ? JSON.parse(item) : initialValue;
     } catch (error) {
       // If error also return initialValue

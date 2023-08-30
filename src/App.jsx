@@ -26,7 +26,7 @@ function App() {
   const [creditosTransicion, setCreditosTransicion] = useState(0);
   const [creditosCanje, setCreditosCanje] = useState(0);
   const [creditosExtra, setCreditosExtra] = useExtraCredits("xcredits", 0);
-  const [materias86, setMaterias86, readOnly] = useMaterias86("materias86-calculadorBilbao", []);
+  const [materias86, setMaterias86, readOnly] = useMaterias86("materias86-calculadorBilbao2", []);
   const [materias23, setMaterias23] = useState([]);
   const [materiasCanjeadas, setMateriasCanjeadas] = useCanje("canje", []);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
