@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/FIUBA-Transicion/static/css/main.b74cc1e2.css",
-    "main.js": "/FIUBA-Transicion/static/js/main.1d3928b6.js",
+    "main.js": "/FIUBA-Transicion/static/js/main.ca06d191.js",
     "static/js/787.27d92466.chunk.js": "/FIUBA-Transicion/static/js/787.27d92466.chunk.js",
     "index.html": "/FIUBA-Transicion/index.html",
     "main.b74cc1e2.css.map": "/FIUBA-Transicion/static/css/main.b74cc1e2.css.map",
-    "main.1d3928b6.js.map": "/FIUBA-Transicion/static/js/main.1d3928b6.js.map",
+    "main.ca06d191.js.map": "/FIUBA-Transicion/static/js/main.ca06d191.js.map",
     "787.27d92466.chunk.js.map": "/FIUBA-Transicion/static/js/787.27d92466.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.b74cc1e2.css",
-    "static/js/main.1d3928b6.js"
+    "static/js/main.ca06d191.js"
   ]
 }
