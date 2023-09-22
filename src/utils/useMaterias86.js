@@ -24,7 +24,6 @@ function migrate(oldItem) {
     materias = materias.concat(orientacion.materias.filter(materia => oldItem.some(m => m.nombre === materia.nombre)));
   });
   materias = materias.concat(plan86.electivas.filter(materia => oldItem.some(m => m.nombre === materia.nombre)));
-  console.log(materias);
   return materias;
 }
 
@@ -47,7 +46,6 @@ export function useMaterias86(key, initialValue) {
       let item = window.localStorage.getItem(key);
       // Parse stored json or try to migrate or if none return initialValue
       if (item) {
-        console.log("Encontrado");
         return JSON.parse(item);
       } else {
         item = window.localStorage.getItem("materias86-calculadorBilbao");
