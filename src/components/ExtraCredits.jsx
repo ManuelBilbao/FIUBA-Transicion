@@ -9,6 +9,9 @@ function ExtraCredits({ value, setValue, disabled }) {
                 value={value}
                 onChange={e => setValue(parseInt((e.target.value) ? e.target.value : 0))}
                 disabled={disabled}
+                sx={{
+                    backgroundColor: "white"
+                }}
             />
         </FormGroup>
     )

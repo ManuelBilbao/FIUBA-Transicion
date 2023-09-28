@@ -15,13 +15,20 @@ code {
 footer{
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
+  padding: 1em 0;
+  background-color: #323232;
+  color: white;
 }
 
-footer p {
-  margin-left: auto;
+footer img {
+  height: 100px;
 }
 
-footer .github {
-  margin-left: auto;
+@media (max-width: 900px) {
+  footer {
+    padding: 1.5em;
+    flex-direction: column;
+    text-align: center;
+  }
 }

@@ -1,22 +1,19 @@
 import './App.css';
-import { Checkbox, FormGroup, FormControlLabel, FormLabel, Grid, Paper, Box, Button, Alert, AlertTitle, Link, Typography } from '@mui/material';
+import { Checkbox, FormGroup, FormControlLabel, FormLabel, Grid, Paper, Box, Typography } from '@mui/material';
 import materias_plan86 from "./plan_86.json";
 import plan23 from "./plan_23.json";
 import { useCallback, useEffect, useState } from 'react';
 import { useMaterias86 } from './utils/useMaterias86';
-import DeleteIcon from '@mui/icons-material/Delete';
-import SnowboardingIcon from '@mui/icons-material/Snowboarding';
-import ShareIcon from '@mui/icons-material/Share';
 import Materia86 from './components/Materia86';
 import Materia23 from './components/Materia23';
 import ShareDialog from './components/ShareDialog';
 import ExtraCredits from './components/ExtraCredits';
+import Header from './components/Header/Header';
 import { useExtraCredits } from './utils/useExtraCredits';
 import { useCanje } from './utils/useCanje';
 import Canje from './components/Canje';
 
 
-const WEB_URL = process.env.REACT_APP_WEB_URL;
 const { creditosElectivas: CREDITOS_ELECTIVAS_23, materias: MATERIAS_PLAN_23 } = plan23;
 const MIN_CREDITOS_CANJE = MATERIAS_PLAN_23.map(materia => materia.canjeable ?? 99).reduce((a, b) => Math.min(a, b))
 
@@ -35,7 +32,7 @@ function App() {
 
   const agregarMateria86 = useCallback((materia) => {
     setMaterias86(materias =>
-    	materias.includes(materia) ? materias : materias.concat(materia)
+      materias.includes(materia) ? materias : materias.concat(materia)
     );
   }, [setMaterias86]);
 
@@ -56,6 +53,7 @@ function App() {
     setCreditosTransicion(0);
     setCreditos(0);
     setMaterias23([]);
+    setCreditosExtra(0);
   };
 
   const eliminarMateria86 = useCallback((materia) => {
@@ -81,20 +79,20 @@ function App() {
     });
 
     for (let i = 0; i < bits.length; i += 4) {
-      hexa += parseInt(bits.slice(i, i+4), 2).toString(16);
+      hexa += parseInt(bits.slice(i, i + 4), 2).toString(16);
     }
 
     setShareCode(hexa);
 
     bits = "";
     hexa = "";
-    
+
     MATERIAS_PLAN_23.forEach(materia => {
       bits += (materiasCanjeadas.some(m => m === materia.nombre)) ? "1" : "0";
     });
 
     for (let i = 0; i < bits.length; i += 4) {
-      hexa += parseInt(bits.slice(i, i+4), 2).toString(16);
+      hexa += parseInt(bits.slice(i, i + 4), 2).toString(16);
     }
 
     setCanjeShareCode(hexa);
@@ -160,80 +158,23 @@ function App() {
   }, [materiasCanjeadas]);
 
   return (
-    <Box sx={{flexGrow: 1}} padding={2}>
-      <Grid container sx={{ margin: "0 0 2rem 0" }}>
-        <Grid item xs={12} sm="auto">
-          <Paper elevation={3} sx={{padding: "1em"}}>
-            <h2>Calculadora transición plan 86 a 2023</h2>
-            <FormGroup>
-              {
-                readOnly ? (
-                  <Alert severity="info">
-                    <AlertTitle>Modo de solo lectura</AlertTitle>
-                     Esta pantalla es solo compartir tu estado actual.<br />
-                     En caso de querer modificarlo, ingresa en la <Link href={WEB_URL}>pantalla principal</Link>.
-                  </Alert>
-                ) : (
-                    <>
-                      <Button
-                      variant="contained"
-                      color="primary"
-                      startIcon={<SnowboardingIcon />}
-                      sx={{ marginBottom: "1em" }}
-                      onClick={seleccionarTodasObligatorias86}
-                    >
-                      Aprobar obligatorias
-                    </Button>
-      
-                    <Button
-                      variant="contained"
-                      color="error"
-                      startIcon={<DeleteIcon />}
-                      sx={{ marginBottom: "1em" }}
-                      onClick={limpiarTodo}
-                    >
-                      Limpiar todo
-                    </Button>
+    <>
+      <Header
+        aprobarObligatorias={seleccionarTodasObligatorias86}
+        limpiar={limpiarTodo}
+        compartir={compartir}
+        readOnly={readOnly}
+      />
 
-                    <Button
-                      variant="contained"
-                      color="success"
-                      startIcon={<ShareIcon />}
-                      onClick={compartir}
-                    >
-                      Compartir
-                    </Button>
-                  </>
-                )
-              }
-              <ShareDialog codigo={shareCode} creditos={creditosExtra} canje={canjeShareCode} open={shareDialogOpen} onClose={() => setShareDialogOpen(false)} />
-            </FormGroup>
-          </Paper>
-        </Grid>
-      </Grid>
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={4}>
-          <Paper elevation={3} sx={{padding: "1em", marginBottom: "2em"}}>
-            <h2>Obligatorias</h2>
-            <FormGroup>
-              {materias_plan86.obligatorias.map((materia, idx) =>
-                <Materia86
-                  key={`${materia.nombre}-86`}
-                  materia={materia}
-                  checked={materias86.some(m => m.nombre === materia.nombre)}
-                  onCheck={agregarMateria86}
-                  onUncheck={eliminarMateria86}
-                  disabled={readOnly}
-                />
-              )}
-            </FormGroup>
-          </Paper>
-          <Paper elevation={3} sx={{padding: "1em", marginBottom: "2em"}}>
-            <h2>Orientación</h2>
-            {materias_plan86.orientaciones.map((orientacion, idx) =>
-              <FormGroup key={orientacion.nombre} sx={{marginBottom: "1em"}}>
-                <FormLabel>{orientacion.nombre}</FormLabel>
-                {orientacion.materias.map((materia, idx) =>
+      <ShareDialog codigo={shareCode} creditos={creditosExtra} canje={canjeShareCode} open={shareDialogOpen} onClose={() => setShareDialogOpen(false)} />
+
+      <Box sx={{ flexGrow: 1 }} padding={2} marginTop={2}>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={4}>
+            <Paper elevation={0} sx={{ padding: "3em", marginBottom: "2em" }}>
+              <h3>Obligatorias</h3>
+              <FormGroup>
+                {materias_plan86.obligatorias.map((materia, idx) =>
                   <Materia86
                     key={`${materia.nombre}-86`}
                     materia={materia}
@@ -244,88 +185,106 @@ function App() {
                   />
                 )}
               </FormGroup>
-            )}
-          </Paper>
-          <Paper elevation={3} sx={{padding: "1em", marginBottom: "2em"}}>
-            <h2>Créditos extra</h2>
-            <ExtraCredits value={creditosExtra} setValue={setCreditosExtra} disabled={readOnly} />
-            <Typography variant='caption'>Agregá acá si tenés créditos extra obtenidos por fuera del plan.</Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <Paper elevation={3} sx={{padding: "1em"}}>
-            <h2>Electivas</h2>
-            <FormGroup>
-              {materias_plan86.electivas.map(materia =>
-                <Materia86
-                  key={`${materia.nombre}-86`}
-                  materia={materia}
-                  checked={materias86.some(m => m.nombre === materia.nombre)}
-                  onCheck={agregarMateria86}
-                  onUncheck={eliminarMateria86}
-                  disabled={readOnly}
-                />
+            </Paper>
+            <Paper elevation={0} sx={{ padding: "3em", marginBottom: "2em" }}>
+              <h3>Orientación</h3>
+              {materias_plan86.orientaciones.map((orientacion, idx) =>
+                <FormGroup key={orientacion.nombre} sx={{ marginBottom: "1em" }}>
+                  <FormLabel>{orientacion.nombre}</FormLabel>
+                  {orientacion.materias.map((materia, idx) =>
+                    <Materia86
+                      key={`${materia.nombre}-86`}
+                      materia={materia}
+                      checked={materias86.some(m => m.nombre === materia.nombre)}
+                      onCheck={agregarMateria86}
+                      onUncheck={eliminarMateria86}
+                      disabled={readOnly}
+                    />
+                  )}
+                </FormGroup>
               )}
-            </FormGroup>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <Paper elevation={3} sx={{padding: "1em", marginBottom: "2em"}}>
-            <h2>Plan 2023</h2>
-            <FormGroup>
-              {MATERIAS_PLAN_23.map(materia =>
-                <Materia23
-                  key={`${materia.nombre}-23`}
-                  materia={materia}
-                  checked={materias23.includes(materia.nombre) || materiasCanjeadas.includes(materia.nombre)}
-                />
-              )}
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    onClick={e => e.preventDefault()}
-                    indeterminate={creditos > 0 && creditos < CREDITOS_ELECTIVAS_23}
-                    checked={creditos >= CREDITOS_ELECTIVAS_23}
-                  />
-                }
-                label={`Electivas: ${(creditos <= CREDITOS_ELECTIVAS_23) ? creditos : CREDITOS_ELECTIVAS_23}/${CREDITOS_ELECTIVAS_23}`}
-              />
-            </FormGroup>
-            {
-              (creditos > CREDITOS_ELECTIVAS_23) ?
-              `Créditos sobrantes: ${creditos - CREDITOS_ELECTIVAS_23 - creditosCanje}` :
-              null
-            }
-          </Paper>
-
-          {creditos >= CREDITOS_ELECTIVAS_23 + MIN_CREDITOS_CANJE ?
-            <Paper elevation={3} sx={{padding: "1em"}}>
-              <h2>Canje por trayectoria académica</h2>
-              <Typography variant='caption'>Si ves esto es porque te sobran {MIN_CREDITOS_CANJE} o más créditos. En este caso, podés elegir alguna(s) de las siguientes materias para canjear por esos créditos.</Typography>
+            </Paper>
+            <Paper elevation={0} sx={{ padding: "3em", marginBottom: "2em" }}>
+              <h3>Créditos extra</h3>
+              <ExtraCredits value={creditosExtra} setValue={setCreditosExtra} disabled={readOnly} />
+              <Typography variant='caption'>Agregá acá si tenés créditos extra obtenidos por fuera del plan.</Typography>
+            </Paper>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Paper elevation={0} sx={{ padding: "3em", marginBottom: "2em" }}>
+              <h3>Electivas</h3>
               <FormGroup>
-                {MATERIAS_PLAN_23.filter(m => m.canjeable).map(materia =>
-                  <Canje
-                    key={`${materia.nombre}-23-canje`}
+                {materias_plan86.electivas.map(materia =>
+                  <Materia86
+                    key={`${materia.nombre}-86`}
                     materia={materia}
-                    checked={materiasCanjeadas.includes(materia.nombre) || materias23.includes(materia.nombre)}
-                    aprobada={materias23.includes(materia.nombre)}
-                    disponible={
-                      (
-                        creditos - creditosCanje - CREDITOS_ELECTIVAS_23 >= materia.canjeable
-                        || materiasCanjeadas.includes(materia.nombre)
-                      ) && !readOnly
-                    }
-                    onCheck={(m) => setMateriasCanjeadas(materiasCanjeadas.concat(m.nombre))}
-                    onUncheck={(m) => setMateriasCanjeadas(materiasCanjeadas.filter(mat => mat !== m.nombre))}
+                    checked={materias86.some(m => m.nombre === materia.nombre)}
+                    onCheck={agregarMateria86}
+                    onUncheck={eliminarMateria86}
+                    disabled={readOnly}
                   />
                 )}
               </FormGroup>
             </Paper>
-            : null
-          }
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Paper elevation={0} sx={{ padding: "3em", marginBottom: "2em" }}>
+              <h3>Plan 2023</h3>
+              <FormGroup>
+                {MATERIAS_PLAN_23.map(materia =>
+                  <Materia23
+                    key={`${materia.nombre}-23`}
+                    materia={materia}
+                    checked={materias23.includes(materia.nombre) || materiasCanjeadas.includes(materia.nombre)}
+                  />
+                )}
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      onClick={e => e.preventDefault()}
+                      indeterminate={creditos > 0 && creditos < CREDITOS_ELECTIVAS_23}
+                      checked={creditos >= CREDITOS_ELECTIVAS_23}
+                    />
+                  }
+                  label={`Electivas: ${(creditos <= CREDITOS_ELECTIVAS_23) ? creditos : CREDITOS_ELECTIVAS_23}/${CREDITOS_ELECTIVAS_23}`}
+                />
+              </FormGroup>
+              {
+                (creditos > CREDITOS_ELECTIVAS_23) ?
+                  `Créditos sobrantes: ${creditos - CREDITOS_ELECTIVAS_23 - creditosCanje}` :
+                  null
+              }
+            </Paper>
+
+            {creditos >= CREDITOS_ELECTIVAS_23 + MIN_CREDITOS_CANJE ?
+              <Paper elevation={0} sx={{ padding: "3em", marginBottom: "2em" }}>
+                <h3>Canje por trayectoria académica</h3>
+                <Typography variant='caption'>Si ves esto es porque te sobran {MIN_CREDITOS_CANJE} o más créditos. En este caso, podés elegir alguna(s) de las siguientes materias para canjear por esos créditos.</Typography>
+                <FormGroup>
+                  {MATERIAS_PLAN_23.filter(m => m.canjeable).map(materia =>
+                    <Canje
+                      key={`${materia.nombre}-23-canje`}
+                      materia={materia}
+                      checked={materiasCanjeadas.includes(materia.nombre) || materias23.includes(materia.nombre)}
+                      aprobada={materias23.includes(materia.nombre)}
+                      disponible={
+                        (
+                          creditos - creditosCanje - CREDITOS_ELECTIVAS_23 >= materia.canjeable
+                          || materiasCanjeadas.includes(materia.nombre)
+                        ) && !readOnly
+                      }
+                      onCheck={(m) => setMateriasCanjeadas(materiasCanjeadas.concat(m.nombre))}
+                      onUncheck={(m) => setMateriasCanjeadas(materiasCanjeadas.filter(mat => mat !== m.nombre))}
+                    />
+                  )}
+                </FormGroup>
+              </Paper>
+              : null
+            }
+          </Grid>
         </Grid>
-      </Grid>
-    </Box>
+      </Box>
+    </>
   );
 }
 
