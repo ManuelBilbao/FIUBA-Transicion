@@ -5,9 +5,9 @@
 ### Env vars necesarias
 
 ```
-NOMBRE_CARRERA: Nombre que aparecerá en el header.
-SLUG_CARRERA: Nombre de la carpeta donde está el plan. e.g.: 'informatica'.
-WEB_URL: Esquema y dominio de la URL.
+VITE_NOMBRE_CARRERA: Nombre que aparecerá en el header.
+VITE_SLUG_CARRERA: Nombre de la carpeta donde está el plan. e.g.: 'informatica'.
+VITE_WEB_URL: Esquema y dominio de la URL.
 ```
 
 ### Development
