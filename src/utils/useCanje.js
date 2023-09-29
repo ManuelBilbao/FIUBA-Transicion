@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import plan23 from '../plan_23.json';
+import { SLUG_CARRERA } from '../config';
+const plan23 = await import(`../planes/${SLUG_CARRERA}/plan_nuevo.json`);
+
 
 function decode(code) {
   let bits = "";

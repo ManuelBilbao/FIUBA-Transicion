@@ -12,6 +12,26 @@ code {
     monospace;
 }
 
+.top {
+  display: flex;
+  padding: 1em 0;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: #0095db;
+}
+
+.top img {
+  width: 200px;
+  display: block;
+  padding: 10px;
+}
+
+.top span {
+  padding: 0.5em 1.75em;
+  border-left: 2px solid white;
+  color: white;
+}
+
 footer{
   display: flex;
   align-items: center;

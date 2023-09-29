@@ -2,8 +2,7 @@ import { useState } from "react";
 import { Dialog, DialogContent, DialogTitle, Link, Button, DialogActions } from "@mui/material";
 import FileCopyIcon from '@mui/icons-material/FileCopy';
 import { blue } from "@mui/material/colors";
-
-const WEB_URL = process.env.REACT_APP_WEB_URL;
+import { WEB_URL } from "../config";
 
 function ShareDialog({ open, onClose, codigo, creditos, canje }) {
   const [copied, setCopied] = useState(false);

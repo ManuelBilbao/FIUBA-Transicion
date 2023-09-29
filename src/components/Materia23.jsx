@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { FormControlLabel, Checkbox, List, ListItem, Typography, Popover } from "@mui/material";
 import InfoIcon from '@mui/icons-material/Info';
-import materias_plan86 from "../plan_86.json";
+import { SLUG_CARRERA } from "../config";
+
+const materias_plan86 = await import(`../planes/${SLUG_CARRERA}/plan_viejo.json`);
 
 function Materia23(props) {
   const {materia, checked} = props;

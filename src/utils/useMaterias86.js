@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import plan86 from '../plan_86.json';
+import { SLUG_CARRERA } from '../config';
+const plan86 = await import(`../planes/${SLUG_CARRERA}/plan_viejo.json`);
 
 function decode(code) {
   let bits = "";

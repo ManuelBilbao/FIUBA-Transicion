@@ -1,4 +1,5 @@
 import { Box } from '@mui/material';
+import { NOMBRE_CARRERA } from '../../config';
 import React from 'react';
 
 function Hero() {
@@ -13,13 +14,13 @@ function Hero() {
             textAlign="center"
             color="white"
             sx={{
-                background: `url(${process.env.PUBLIC_URL}/banner_recortado.png)`,
+                background: `url(${import.meta.env.BASE_URL}banner_recortado.png)`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
             }}
         >
             <h1>Calculadora Plan 2023</h1>
-            <h2>Ing. en Informática</h2>
+            <h2>{ NOMBRE_CARRERA }</h2>
         </Box>
     )
 }
