@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Dialog, DialogContent, DialogTitle, Link, Button, DialogActions } from "@mui/material";
 import FileCopyIcon from '@mui/icons-material/FileCopy';
-
-const WEB_URL = process.env.REACT_APP_WEB_URL;
+import { blue } from "@mui/material/colors";
+import { WEB_URL } from "../config";
 
 function ShareDialog({ open, onClose, codigo, creditos, canje }) {
   const [copied, setCopied] = useState(false);
@@ -22,12 +22,12 @@ function ShareDialog({ open, onClose, codigo, creditos, canje }) {
     <Dialog open={open} onClose={onClose} sx={{ width: "auto" }}>
       <DialogTitle>Compartir</DialogTitle>
       <DialogContent sx={{ paddingY: 0 }}>
-        <Link href={url}>{url}</Link>
+        <Link href={url} color={blue[700]}>{url}</Link>
       </DialogContent>
       <DialogActions sx={{ paddingX: "1.5em", paddingY: "1em" }}>
         <Button
           onClick={handleCopy}
-          color={copied ? "success" : "primary"}
+          color={copied ? "success" : "info"}
           variant="outlined"
           startIcon={<FileCopyIcon />}
           sx={{ cursor: copied ? "default" : "pointer" }}

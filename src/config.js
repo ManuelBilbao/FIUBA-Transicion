@@ -1,0 +1,5 @@
+export const {
+    VITE_NOMBRE_CARRERA: NOMBRE_CARRERA,
+    VITE_SLUG_CARRERA: SLUG_CARRERA,
+    VITE_WEB_URL: WEB_URL 
+} = import.meta.env;

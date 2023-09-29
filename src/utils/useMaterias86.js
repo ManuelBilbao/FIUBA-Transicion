@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import plan86 from '../plan_86.json';
+import { SLUG_CARRERA } from '../config';
+const plan86 = await import(`../planes/${SLUG_CARRERA}/plan_viejo.json`);
 
 function decode(code) {
   let bits = "";
@@ -24,7 +25,6 @@ function migrate(oldItem) {
     materias = materias.concat(orientacion.materias.filter(materia => oldItem.some(m => m.nombre === materia.nombre)));
   });
   materias = materias.concat(plan86.electivas.filter(materia => oldItem.some(m => m.nombre === materia.nombre)));
-  console.log(materias);
   return materias;
 }
 
@@ -47,7 +47,6 @@ export function useMaterias86(key, initialValue) {
       let item = window.localStorage.getItem(key);
       // Parse stored json or try to migrate or if none return initialValue
       if (item) {
-        console.log("Encontrado");
         return JSON.parse(item);
       } else {
         item = window.localStorage.getItem("materias86-calculadorBilbao");
