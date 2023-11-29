@@ -124,8 +124,9 @@ function App() {
         if (materia.equivalencias[i].materias.length === 0)
           continue;
 
-        if (taller2Usada && materia.equivalencias[i].materias.includes("Taller de Programación II"))
-          continue;
+          // it looks that una materia se puede usar mas de una vez chabon
+        // if (taller2Usada && materia.equivalencias[i].materias.includes("Taller de Programación II"))
+        //   continue;
 
         if (tieneMaterias(materia.equivalencias[i].materias)) {
           _materias23.push(materia.nombre);
