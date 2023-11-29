@@ -104,7 +104,6 @@ function App() {
   useEffect(() => {
     let _materias23 = [];
     let _creditos = 0;
-    let taller2Usada = false;
 
     const creditos86 = materias86.map(m => m.creditos).reduce((a, b) => a + b, 0);
 
@@ -124,16 +123,9 @@ function App() {
         if (materia.equivalencias[i].materias.length === 0)
           continue;
 
-          // it looks that una materia se puede usar mas de una vez chabon
-        // if (taller2Usada && materia.equivalencias[i].materias.includes("Taller de Programación II"))
-        //   continue;
-
         if (tieneMaterias(materia.equivalencias[i].materias)) {
           _materias23.push(materia.nombre);
           _creditos += materia.equivalencias[i].creditos;
-
-          if (materia.equivalencias[i].materias.includes("Taller de Programación II"))
-            taller2Usada = true;
 
           break;
         }
