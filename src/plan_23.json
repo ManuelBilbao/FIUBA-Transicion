@@ -149,12 +149,12 @@
             "nombre": "Ingeniería de Software II",
             "equivalencias": [
                 {
-                    "materias": ["Técnicas de Diseño"],
-                    "creditos": 0
-                },
-                {
                     "materias": ["Taller de Programación II"],
                     "creditos": -4
+                },
+                {
+                    "materias": ["Técnicas de Diseño"],
+                    "creditos": -6
                 }
             ]
         },
