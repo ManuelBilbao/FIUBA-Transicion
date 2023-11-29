@@ -215,10 +215,6 @@
                 {
                     "materias": ["Sistemas Distribuidos I"],
                     "creditos": 0
-                },
-                {
-                    "materias": ["Taller de Programación II"],
-                    "creditos": -6
                 }
             ],
             "canjeable": 6
