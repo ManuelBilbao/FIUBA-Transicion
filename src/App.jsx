@@ -155,6 +155,11 @@ function App() {
   return (
     <Box sx={{flexGrow: 1}} padding={2}>
       <Grid container sx={{ margin: "0 0 2rem 0" }}>
+        <Grid item xs={12} sx={{ margin: "0 0 1rem 0" }}>
+          <Alert severity="warning">
+            <AlertTitle sx={{ margin: "0" }}><b>La calculadora no es oficial y puede estar desactualizada</b></AlertTitle>
+          </Alert>
+        </Grid>
         <Grid item xs={12} sm="auto">
           <Paper elevation={3} sx={{padding: "1em"}}>
             <h2>Calculadora transición plan 86 a 2023</h2>
